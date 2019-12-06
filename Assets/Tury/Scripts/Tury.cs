@@ -5,8 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Tury : MonoBehaviour
-{
+public class Tury : MonoBehaviour {
     float timeOfTurn = 0;
     public int numberOfTurns = 1;
     public Text turnsText;
@@ -14,36 +13,21 @@ public class Tury : MonoBehaviour
     [SerializeField]
     private GroundPlacementController placement;
     [SerializeField]
-    private Resources resources;
+    private ResourcesManager resourcesManager;
 
-    [SerializeField] private Buildings buildings;
-
-    void Start()
-    {
-        
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+    [SerializeField] BuildingManager buildingManager;
+    
+    void Update() {
         transform.eulerAngles = new Vector3(0, 0, -timeOfTurn*6);
         timeOfTurn += Time.deltaTime;
         turnsText.text = "turn: " + numberOfTurns;
-        if (timeOfTurn > 2.0f)
-        {
-            foreach (var building in buildings.Where(b => b.NumberOfBuildings > 0)) {
-                resources.AddResources(building.TotalIncome);
-            }
-            switchMode();
+        if (timeOfTurn > 5.0f) {
+            foreach (var building in buildingManager.GetBuildings()) 
+                resourcesManager.AddResources(building.resourcesProduction);
+            
             numberOfTurns++;
             timeOfTurn = 0;
-            placement.DestroySelectedObject();
+            placement.TryToDestroySelectedObject();
         }
-    }
-    
-    void switchMode()
-    {
-
     }
 }

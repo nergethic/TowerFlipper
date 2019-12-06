@@ -2,92 +2,87 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class GroundPlacementController : MonoBehaviour {
-    [SerializeField] private Building2[] placeableObjectPrefabs;
-    [SerializeField]
-    private KeyCode deleteObjectHotKey;
+    // TODO: (make check for this) building prefab types must be in the same order as in BuildingType enum!
+    [SerializeField] GameObject[] placeableObjectPrefabs;
+    [SerializeField] BuildingManager buildingManager;
+    [SerializeField] ResourcesManager resourcesManager;
+    [SerializeField] KeyCode deleteObjectHotKey;
     private GameObject currentPlaceableObject;
-    private int currentBuildingIdx;
-    [SerializeField] private Buildings buildings;
-    
-    [SerializeField]
-    private BoxCollider skrrr;
-    
+    private BuildingType selectedBuildingType = BuildingType.None;
 
-    [SerializeField] Resources resources;
-    
-    
-    void Update()
-    {
+    [SerializeField] BoxCollider skrrr;
+
+    public void Update() {
         HandleDestroyObjectHotKey();
-        if (currentPlaceableObject != null)
-        {
-            MoveCurrentPlacableObjectToMouse();
-            ReleaseIfClicked();
-        }
+        
+        if (selectedBuildingType == BuildingType.None)
+            return;
+        
+        MoveCurrentPlacableObjectToMouse();
+        ReleaseIfClicked();
     }
-    public void button()
-    {
-        HandleNewObjectButtonClick();
-    }
-    public void button1()
-    {
-        HandleNewObjectButtonClick1();
-    }
-    
-    private void MoveCurrentPlacableObjectToMouse()
-    {
+
+    private void MoveCurrentPlacableObjectToMouse() {
+        Assert.IsTrue(currentPlaceableObject != null, "currentPlaceableObject != null");
+        
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
-        if (skrrr.Raycast(ray, out hitInfo, 10000000.0f))
-        {
+        
+        if (skrrr.Raycast(ray, out hitInfo, float.PositiveInfinity)) {
             currentPlaceableObject.transform.position = hitInfo.point;
             currentPlaceableObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);           
         }
     }
 
-    private void ReleaseIfClicked()
-    {
+    private void ReleaseIfClicked() {
         if (Input.GetMouseButtonDown(0)) {
-            var buildingInstance = buildings.GetBuilding(placeableObjectPrefabs[currentBuildingIdx].buildingType);
-            
-            if (buildingInstance.Build(resources))
-            {
+            var requiredResources = buildingManager.GetResourcesRequiredToBuild(selectedBuildingType);
+            if (resourcesManager.CanSpend(requiredResources)) {
+                resourcesManager.SpendResources(requiredResources);
+                var building = currentPlaceableObject.GetComponentInChildren<Building>();
+                buildingManager.InitAndRegisterBuilding(building, selectedBuildingType);
+                selectedBuildingType = BuildingType.None;
                 currentPlaceableObject = null;
-                currentBuildingIdx = -1;    
+            } else {
+                // TODO: red blink
+                TryToDestroySelectedObject();   
             }
-            else DestroySelectedObject();
-
         }
-           
     }
     
-    private void HandleNewObjectButtonClick()
-    {
-        if (currentPlaceableObject == null) {
-            currentPlaceableObject = Instantiate(placeableObjectPrefabs[0].gameObject);
-            currentBuildingIdx = 0;
-        }
-        
-    }
-
-    private void HandleNewObjectButtonClick1()
-    {
-        if (currentPlaceableObject == null) {
-            currentPlaceableObject = Instantiate(placeableObjectPrefabs[1].gameObject);
-            currentBuildingIdx = 1;
+    private void HandleButtonClick(BuildingType buildingType) {
+        if (selectedBuildingType == BuildingType.None && buildingType != BuildingType.None) {
+            selectedBuildingType = buildingType;
+            currentPlaceableObject = Instantiate(placeableObjectPrefabs[(int)buildingType]);
         }
     }
 
-    private void HandleDestroyObjectHotKey()
-    {
-        if(Input.GetKeyDown(deleteObjectHotKey))
+    private void HandleDestroyObjectHotKey() {
+        if (Input.GetKeyDown(deleteObjectHotKey))
+            TryToDestroySelectedObject();
+    }
+
+    public void TryToDestroySelectedObject() {
+        if (currentPlaceableObject != null)
             Destroy(currentPlaceableObject);
     }
-
-    public void DestroySelectedObject() {
-        Destroy(currentPlaceableObject);
+    
+    public void button() {
+        HandleNewObjectButtonClick();
     }
     
+    public void button1() {
+        HandleNewObjectButtonClick1();
+    }
+    
+    private void HandleNewObjectButtonClick() {
+        HandleButtonClick(BuildingType.SmolBuildng);
+    }
+
+    private void HandleNewObjectButtonClick1() {
+        HandleButtonClick(BuildingType.BigBuilding);
+    }
 }

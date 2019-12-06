@@ -1,43 +1,35 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.Assertions;
 
-public class Resources : MonoBehaviour
-{
-    [SerializeField]
-    private Building2 building2;
-    [SerializeField] private Text resourcesText;
-    public Dictionary<string, int> playerResources;
-    private void Start() {
-        playerResources = Resource.AllResources.ToDictionary(r => r.Name, r => r.StartingQuantity);
+public class Resources {
+    public readonly float[] values;
+
+    public Resources() {
+        values = new float[(int)ResourceType.Count];
     }
 
-    private void Update() {
-        resourcesText.text = string.Join(",", playerResources.Select(r => $"{r.Key}: {r.Value}"));
+    public void SetValue(ResourceType resourceType, float value) {
+        int index = (int)resourceType;
+        PerformSafetyCheck(index);
+        values[index] = value;
     }
 
-    private bool CanSpend(IEnumerable<(Resource resource, int quantity)> resources) =>
-        resources.All(r => playerResources[r.resource.Name] >= r.quantity);
-
-    public bool Spend(IEnumerable<(Resource resource, int quantity)> resources) {
-        var valueTuples = resources as (Resource resource, int quantity)[] ?? resources.ToArray();
-        if (!CanSpend(valueTuples)) return false;
-        foreach (var (resource, quantity) in valueTuples) {
-            playerResources[resource.Name] -= quantity;
-        }
-        return true;
+    public float GetValue(ResourceType resourceType) {
+        int index = (int)resourceType;
+        PerformSafetyCheck(index);
+        return values[index];
     }
 
-    public void AddResources(IEnumerable<(Resource resource, int quantity)> resources) {
-        foreach (var (resource, quantity) in resources) {
-            playerResources[resource.Name] += quantity;
-        }
+    void PerformSafetyCheck(int index = (int)ResourceType.Count-1) {
+        Assert.IsTrue(index >= 0, "index >= 0");
+        Assert.IsTrue(index < (int)ResourceType.Count, "index < (int)ResourceType.Count");
+        Assert.IsTrue(values != null, "values != null");
+        Assert.IsTrue(values.Length == (int)ResourceType.Count, "values.Length == (int)ResourceType.Count");
     }
-
 }
 
-
-
+public enum ResourceType: int {
+    Gold = 0,
+    Wood,
+    Stone,
+    Count
+}
