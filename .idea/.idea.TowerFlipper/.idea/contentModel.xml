@@ -10,19 +10,16 @@
           <e p="AIManager.cs" t="Include" />
           <e p="BattlefieldLane.cs" t="Include" />
           <e p="BattlefieldUnit.cs" t="Include" />
+          <e p="Building.cs" t="Include" />
+          <e p="BuildingManager.cs" t="Include" />
           <e p="CubeSpawner.cs" t="Include" />
+          <e p="Grid.cs" t="Include" />
+          <e p="GroundPlacementController.cs" t="Include" />
+          <e p="MathUtility.cs" t="Include" />
           <e p="MouseManager.cs" t="Include" />
-        </e>
-        <e p="Tury" t="Include">
-          <e p="Scripts" t="Include">
-            <e p="Building.cs" t="Include" />
-            <e p="BuildingManager.cs" t="Include" />
-            <e p="GroundPlacementController.cs" t="Include" />
-            <e p="MathUtility.cs" t="Include" />
-            <e p="Resources.cs" t="Include" />
-            <e p="ResourcesManager.cs" t="Include" />
-            <e p="Tury.cs" t="Include" />
-          </e>
+          <e p="Resources.cs" t="Include" />
+          <e p="ResourcesManager.cs" t="Include" />
+          <e p="Tury.cs" t="Include" />
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />

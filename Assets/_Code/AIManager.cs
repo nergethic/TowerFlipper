@@ -11,7 +11,6 @@ public class AIManager : MonoBehaviour {
     }
     
     void SpawnWarrior() {
-        Debug.LogError("Enemy unit spawned");
         var newUnit = Instantiate(unit, battlefieldLane.enemySpawnArea.transform.position, Quaternion.identity);
         newUnit.isEnemy = true;
         newUnit.movementDirection = BattlefieldUnit.MovementDirection.Backward;
