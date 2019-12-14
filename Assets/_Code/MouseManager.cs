@@ -44,7 +44,7 @@ public class MouseManager : MonoBehaviour {
                     var snappedPos = SnapToGrid(centerMouse);
                     snappedPos.x += halfGridRes;
                     snappedPos.z += halfGridRes;
-                    highlightedCell.position = snappedPos;
+                    highlightedCell.position = new Vector3(snappedPos.x, highlightedCell.position.y, snappedPos.z);
                     gizmosGridCenterPos = snappedPos;
                     snapUnit.transform.position = snappedPos;
                     break;
@@ -62,12 +62,12 @@ public class MouseManager : MonoBehaviour {
     }
 
     private void OnDrawGizmos() {
-        Gizmos.color = Color.blue;
+        Gizmos.color = Color.gray;
 
         for (float y = -5f; y < 8f; y += gridResolution) {
             for (float x = -5f; x < 8f; x += gridResolution) {
                 var snappedPos = SnapToGrid(new Vector3(x, 0, y));
-                Gizmos.DrawSphere(gizmosGridCenterPos+snappedPos, 0.04f);
+                Gizmos.DrawSphere(gizmosGridCenterPos+snappedPos, 0.06f);
             }
         }
     }
