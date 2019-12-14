@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
+
 
 public class GroundPlacementController : MonoBehaviour {
     // TODO: (make check for this) building prefab types must be in the same order as in BuildingType enum!
@@ -10,11 +13,20 @@ public class GroundPlacementController : MonoBehaviour {
     [SerializeField] BuildingManager buildingManager;
     [SerializeField] ResourcesManager resourcesManager;
     [SerializeField] KeyCode deleteObjectHotKey;
+    public Text errorText;
+    public Text errorResources;
     private GameObject currentPlaceableObject;
     private BuildingType selectedBuildingType = BuildingType.None;
     private Dictionary<Vector3, BuildingType> occupiedGrids = new Dictionary<Vector3, BuildingType>();
     [SerializeField] BoxCollider skrrr;
     Grid grid = new Grid(10);
+
+    private void Start()
+    {
+        errorText.text = "";
+        errorResources.text = "";
+    }
+
     public void Update() {
         HandleDestroyObjectHotKey();
         
@@ -24,6 +36,21 @@ public class GroundPlacementController : MonoBehaviour {
         MoveCurrentPlacableObjectToMouse();
         ReleaseIfClicked();
     }
+
+    IEnumerator DisplayPopupBuildingSpace()
+    {    
+        errorText.transform.position = Input.mousePosition;
+        errorText.text = "You can't build here";
+        yield return new WaitForSeconds(1f);
+        errorText.text = "";
+    }
+    IEnumerator DisplayPopupSpendings()
+    {    
+        errorResources.text = "You don't have enough resources to build it";
+        yield return new WaitForSeconds(1f);
+        errorResources.text = "";
+    }
+
 
     private bool IsGridEmpty()
     {
@@ -58,7 +85,14 @@ public class GroundPlacementController : MonoBehaviour {
                 currentPlaceableObject = null;
             } else {
                 // TODO: red blink
-                TryToDestroySelectedObject();   
+                if (!resourcesManager.CanSpend(requiredResources))
+                    StartCoroutine(DisplayPopupSpendings());
+                else
+                    StartCoroutine(DisplayPopupBuildingSpace());
+                
+                TryToDestroySelectedObject();
+
+
             }
         }
     }
@@ -81,8 +115,7 @@ public class GroundPlacementController : MonoBehaviour {
             Destroy(currentPlaceableObject);
             selectedBuildingType = BuildingType.None;
         }
-
-}
+    }
     
     public void button() {
         HandleNewObjectButtonClick();
@@ -97,6 +130,6 @@ public class GroundPlacementController : MonoBehaviour {
     }
 
     private void HandleNewObjectButtonClick1() {
-        HandleButtonClick(BuildingType.BigBuilding);
+        HandleButtonClick(BuildingType.Mine);
     }
 }
