@@ -11,6 +11,7 @@ public class MouseManager : MonoBehaviour {
     RaycastHit hit;
     Ray ray;
     Vector3 gizmosGridCenterPos = Vector3.zero;
+    Grid grid = new Grid(2);
     //LayerMask hitMask;
 
     private void Start() {
@@ -38,9 +39,9 @@ public class MouseManager : MonoBehaviour {
 
                 case "Battlefield": {
                     Vector3 centerMouse = hit.point;
-                    var snappedPos = Grid.SnapToGrid(centerMouse);
-                    snappedPos.x += Grid.halfGridRes;
-                    snappedPos.z += Grid.halfGridRes;
+                    var snappedPos = grid.SnapToGrid(centerMouse);
+                    snappedPos.x += grid.halfGridRes;
+                    snappedPos.z += grid.halfGridRes;
                     highlightedCell.position = new Vector3(snappedPos.x, highlightedCell.position.y, snappedPos.z);
                     gizmosGridCenterPos = snappedPos;
                     snapUnit.transform.position = snappedPos;
@@ -53,9 +54,9 @@ public class MouseManager : MonoBehaviour {
     private void OnDrawGizmos() {
         Gizmos.color = Color.gray;
 
-        for (float y = -5f; y < 8f; y += Grid.gridResolution) {
-            for (float x = -5f; x < 8f; x += Grid.gridResolution) {
-                var snappedPos = Grid.SnapToGrid(new Vector3(x, 0, y));
+        for (float y = -5f; y < 8f; y += grid.gridResolution) {
+            for (float x = -5f; x < 8f; x += grid.gridResolution) {
+                var snappedPos = grid.SnapToGrid(new Vector3(x, 0, y));
                 Gizmos.DrawSphere(gizmosGridCenterPos+snappedPos, 0.06f);
             }
         }

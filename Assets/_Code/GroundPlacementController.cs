@@ -12,9 +12,9 @@ public class GroundPlacementController : MonoBehaviour {
     [SerializeField] KeyCode deleteObjectHotKey;
     private GameObject currentPlaceableObject;
     private BuildingType selectedBuildingType = BuildingType.None;
-
+    private Dictionary<Vector3, BuildingType> occupiedGrids = new Dictionary<Vector3, BuildingType>();
     [SerializeField] BoxCollider skrrr;
-
+    Grid grid = new Grid(10);
     public void Update() {
         HandleDestroyObjectHotKey();
         
@@ -25,25 +25,35 @@ public class GroundPlacementController : MonoBehaviour {
         ReleaseIfClicked();
     }
 
+    private bool IsGridEmpty()
+    {
+        if (occupiedGrids.ContainsKey(currentPlaceableObject.transform.position))
+            return false;
+        else
+            return true;
+
+    }
+    
     private void MoveCurrentPlacableObjectToMouse() {
         Assert.IsTrue(currentPlaceableObject != null, "currentPlaceableObject != null");
         
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
-        
         if (skrrr.Raycast(ray, out hitInfo, float.PositiveInfinity)) {
-            currentPlaceableObject.transform.position = hitInfo.point;
-            currentPlaceableObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);           
+            currentPlaceableObject.transform.position = grid.SnapToGrid(hitInfo.point);
+            currentPlaceableObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
         }
+        
     }
 
     private void ReleaseIfClicked() {
         if (Input.GetMouseButtonDown(0)) {
             var requiredResources = buildingManager.GetResourcesRequiredToBuild(selectedBuildingType);
-            if (resourcesManager.CanSpend(requiredResources)) {
+            if (resourcesManager.CanSpend(requiredResources) && IsGridEmpty()) {
                 resourcesManager.SpendResources(requiredResources);
                 var building = currentPlaceableObject.GetComponentInChildren<Building>();
                 buildingManager.InitAndRegisterBuilding(building, selectedBuildingType);
+                occupiedGrids.Add(currentPlaceableObject.transform.position, selectedBuildingType);
                 selectedBuildingType = BuildingType.None;
                 currentPlaceableObject = null;
             } else {
@@ -65,10 +75,14 @@ public class GroundPlacementController : MonoBehaviour {
             TryToDestroySelectedObject();
     }
 
-    public void TryToDestroySelectedObject() {
-        if (currentPlaceableObject != null)
+    public void TryToDestroySelectedObject()
+    {
+        if (currentPlaceableObject != null){
             Destroy(currentPlaceableObject);
-    }
+            selectedBuildingType = BuildingType.None;
+        }
+
+}
     
     public void button() {
         HandleNewObjectButtonClick();
