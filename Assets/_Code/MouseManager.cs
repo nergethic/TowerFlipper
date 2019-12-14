@@ -11,8 +11,6 @@ public class MouseManager : MonoBehaviour {
     RaycastHit hit;
     Ray ray;
     Vector3 gizmosGridCenterPos = Vector3.zero;
-    const float gridResolution = 2f;
-    const float halfGridRes = gridResolution / 2f;
     //LayerMask hitMask;
 
     private void Start() {
@@ -39,11 +37,10 @@ public class MouseManager : MonoBehaviour {
                 }
 
                 case "Battlefield": {
-                    Debug.LogError("Hit");
                     Vector3 centerMouse = hit.point;
-                    var snappedPos = SnapToGrid(centerMouse);
-                    snappedPos.x += halfGridRes;
-                    snappedPos.z += halfGridRes;
+                    var snappedPos = Grid.SnapToGrid(centerMouse);
+                    snappedPos.x += Grid.halfGridRes;
+                    snappedPos.z += Grid.halfGridRes;
                     highlightedCell.position = new Vector3(snappedPos.x, highlightedCell.position.y, snappedPos.z);
                     gizmosGridCenterPos = snappedPos;
                     snapUnit.transform.position = snappedPos;
@@ -53,20 +50,12 @@ public class MouseManager : MonoBehaviour {
         }
     }
 
-    Vector3 SnapToGrid(Vector3 position) {
-        var result = position;
-        result.x = Mathf.Floor(result.x / gridResolution) * gridResolution;
-        result.z = Mathf.Floor(result.z / gridResolution) * gridResolution;
-
-        return result;
-    }
-
     private void OnDrawGizmos() {
         Gizmos.color = Color.gray;
 
-        for (float y = -5f; y < 8f; y += gridResolution) {
-            for (float x = -5f; x < 8f; x += gridResolution) {
-                var snappedPos = SnapToGrid(new Vector3(x, 0, y));
+        for (float y = -5f; y < 8f; y += Grid.gridResolution) {
+            for (float x = -5f; x < 8f; x += Grid.gridResolution) {
+                var snappedPos = Grid.SnapToGrid(new Vector3(x, 0, y));
                 Gizmos.DrawSphere(gizmosGridCenterPos+snappedPos, 0.06f);
             }
         }

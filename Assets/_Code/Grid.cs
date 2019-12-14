@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grid : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+public static class Grid {
+    public const float gridResolution = 2f;
+    public const float halfGridRes = gridResolution / 2f;
+    
+    public static Vector3 SnapToGrid(Vector3 position) {
+        var result = position;
+        result.x = Mathf.Floor(result.x / gridResolution) * gridResolution;
+        result.z = Mathf.Floor(result.z / gridResolution) * gridResolution;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        return result;
     }
 }
