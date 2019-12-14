@@ -39,6 +39,7 @@ public class MouseManager : MonoBehaviour {
                 }
 
                 case "Battlefield": {
+                    Debug.LogError("Hit");
                     Vector3 centerMouse = hit.point;
                     var snappedPos = SnapToGrid(centerMouse);
                     snappedPos.x += halfGridRes;
@@ -61,7 +62,7 @@ public class MouseManager : MonoBehaviour {
     }
 
     private void OnDrawGizmos() {
-        Gizmos.color = Color.grey;
+        Gizmos.color = Color.gray;
 
         for (float y = -5f; y < 8f; y += gridResolution) {
             for (float x = -5f; x < 8f; x += gridResolution) {
