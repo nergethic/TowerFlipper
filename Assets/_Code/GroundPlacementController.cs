@@ -19,7 +19,7 @@ public class GroundPlacementController : MonoBehaviour {
     private BuildingType selectedBuildingType = BuildingType.None;
     private Dictionary<Vector3, BuildingType> occupiedGrids = new Dictionary<Vector3, BuildingType>();
     [SerializeField] BoxCollider skrrr;
-    Grid grid = new Grid(10);
+    Grid grid = new Grid(2);
 
     private void Start()
     {
