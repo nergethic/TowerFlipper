@@ -31,7 +31,8 @@ public class Tury : MonoBehaviour {
         transform.eulerAngles = new Vector3(0, 0, -timeOfTurn*6);
         timeOfTurn += Time.deltaTime;
         turnsText.text = "turn: " + numberOfTurns;
-        if (timeOfTurn > 5.0f) {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+        //if (timeOfTurn > 5.0f) {
             foreach (var building in buildingManager.GetBuildings()) 
                 resourcesManager.AddResources(building.resourcesProduction);
             
@@ -40,21 +41,15 @@ public class Tury : MonoBehaviour {
             timeOfTurn = 0;
             placement.TryToDestroySelectedObject();
         }
-        
-
     }
 
-    private void MoveCamera()
-    {
-        if (numberOfTurns % 2 == 0)
-        {
-            camera.transform.DOMove(cameraVillige.position, 0);
-            camera.transform.DORotate(cameraVillige.rotation.eulerAngles, 0);
-        }
-        else
-        {
-            camera.transform.DOMove(batteFieldPosition, 0);
-            camera.transform.DORotate(cameraBattlefield.rotation.eulerAngles, 0);
+    private void MoveCamera() {
+        if (numberOfTurns % 2 == 0) {
+            camera.transform.DOMove(cameraVillige.position, 1.5f);
+            camera.transform.DORotate(cameraVillige.rotation.eulerAngles, 1.5f);
+        } else {
+            camera.transform.DOMove(batteFieldPosition, 1.5f);
+            camera.transform.DORotate(cameraBattlefield.rotation.eulerAngles, 1.5f);
         }
 
     }
