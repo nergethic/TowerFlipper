@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Warrior : BattlefieldUnit {
@@ -13,6 +14,6 @@ public class Warrior : BattlefieldUnit {
         var pos = thisTransform.position;
         pos += thisTransform.forward * 2f;
 
-        thisTransform.position = pos;
+        thisTransform.DOMove(pos, 0.8f);
     }
 }
