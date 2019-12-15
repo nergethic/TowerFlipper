@@ -5,13 +5,14 @@ using UnityEngine.Assertions.Comparers;
 
 public class MouseManager : MonoBehaviour {
     [SerializeField] Camera camera;
-    [SerializeField] GameObject unit;
+    [SerializeField] UnitManager unitManager;
     [SerializeField] Transform snapUnit;
     [SerializeField] Transform highlightedCell;
     RaycastHit hit;
     Ray ray;
     Vector3 gizmosGridCenterPos = Vector3.zero;
     Grid grid = new Grid(2);
+    bool mouseIsDown;
     //LayerMask hitMask;
 
     private void Start() {
@@ -21,8 +22,8 @@ public class MouseManager : MonoBehaviour {
     }
 
     private void Update() {
-        //if (Input.GetMouseButtonDown(0))
-            Action();
+        mouseIsDown = Input.GetMouseButtonDown(0);
+        Action();
     }
 
     void Action() {
@@ -30,21 +31,26 @@ public class MouseManager : MonoBehaviour {
 
         if (Physics.Raycast(ray, out hit, float.PositiveInfinity)) {
             Transform hitObject = hit.transform;
+            
+            Vector3 centerMouse = hit.point;
+            var snappedPos = grid.SnapToGrid(centerMouse);
+            snappedPos.x += grid.halfGridRes;
+            snappedPos.z += grid.halfGridRes;
 
             switch (hitObject.tag) {
                 case "PlayerSpawn": {
-                    //Instantiate(unit, hit.point, Quaternion.identity);
+                    //unitManager.SpawnSelectedUnit(snappedPos);
                     break;
                 }
 
                 case "Battlefield": {
-                    Vector3 centerMouse = hit.point;
-                    var snappedPos = grid.SnapToGrid(centerMouse);
-                    snappedPos.x += grid.halfGridRes;
-                    snappedPos.z += grid.halfGridRes;
+                    if (mouseIsDown) {
+                        unitManager.SpawnSelectedUnit(snappedPos);
+                    }
+                    
                     highlightedCell.position = new Vector3(snappedPos.x, highlightedCell.position.y, snappedPos.z);
                     gizmosGridCenterPos = snappedPos;
-                    snapUnit.transform.position = snappedPos;
+                    //snapUnit.transform.position = snappedPos;
                     break;
                 }
             }

@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Grid {
     public float gridResolution;
-    public float halfGridRes{get{return gridResolution / 2;}
-    }
+    public float halfGridRes => gridResolution / 2;
 
-    public Grid(float res)
-    {
+    public Grid(float res) {
         gridResolution = res;
     }
+    
     public  Vector3 SnapToGrid(Vector3 position) {
         var result = position;
         result.x = Mathf.Floor(result.x / gridResolution) * gridResolution;
