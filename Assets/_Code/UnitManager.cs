@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class UnitManager : MonoBehaviour {
@@ -14,7 +15,11 @@ public class UnitManager : MonoBehaviour {
         if (selectedUnit == null)
             return;
         
-        var gameObject = Instantiate(selectedUnit, position, Quaternion.identity);
-        gameObject.GetComponent<BattlefieldUnit>().Initialise(timeManager);
+        var instance = Instantiate(selectedUnit, position, Quaternion.identity);
+        instance.transform.localScale = Vector3.zero;
+        instance.transform.DOScale(Vector3.one, 0.4f);
+
+        var battlefieldUnityComponent = instance.GetComponent<BattlefieldUnit>();
+        battlefieldUnityComponent.Initialise(timeManager);
     }
 }

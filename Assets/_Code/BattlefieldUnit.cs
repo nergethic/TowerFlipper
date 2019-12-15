@@ -9,20 +9,21 @@ public class BattlefieldUnit : MonoBehaviour {
     public MovementDirection movementDirection = MovementDirection.Forward;
     public bool isEnemy = false;
     TimeManager timeManager;
-    Transform thisTransform;
+    protected Transform thisTransform;
 
-    public void Initialise(TimeManager timeManager) {
+    public virtual void Initialise(TimeManager timeManager) {
         thisTransform = transform;
         this.timeManager = timeManager;
-        turnSpeed = UnityEngine.Random.RandomRange(0.1f, 4f);
         timeManager.Add(this);
+
+        if (movementDirection == MovementDirection.Forward) {
+            thisTransform.LookAt(thisTransform.position + Vector3.right);
+        } else if (movementDirection == MovementDirection.Backward) {
+            thisTransform.LookAt(thisTransform.position + Vector3.left);
+        }
     }
 
-    public void Tick() {
-        var pos = thisTransform.position;
-        pos += thisTransform.forward * 2f;
-
-        thisTransform.position = pos;
+    public virtual void Tick() {
     }
 
     public enum MovementDirection {

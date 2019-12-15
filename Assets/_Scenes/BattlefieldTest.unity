@@ -725,7 +725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeManager: {fileID: 642479563}
-  selectedUnit: {fileID: 492658888429030193, guid: cd3f87c862410f84990707979ffbb1ce,
+  selectedUnit: {fileID: 3085161050423193817, guid: cd3f87c862410f84990707979ffbb1ce,
     type: 3}
 --- !u!1 &1208855904
 GameObject:
@@ -755,7 +755,7 @@ BoxCollider:
   m_GameObject: {fileID: 1208855904}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -1131,8 +1131,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1853997798}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.11075595, y: 23.014687, z: 7.968805}
+  m_LocalRotation: {x: 0.44251168, y: -0.0013451303, z: 0.0006630613, w: 0.89676154}
+  m_LocalPosition: {x: -21.136969, y: 14.8062725, z: -2.9337368}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1291,6 +1291,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1491328762761153032, guid: 1a55a4260fd0ff248b09f38fb4b946a0,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 1491328762761153036, guid: 1a55a4260fd0ff248b09f38fb4b946a0,
         type: 3}
       propertyPath: m_Name
@@ -1322,6 +1327,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 76628239dc12bca45a5c2032aa950407, type: 2}
     - target: {fileID: 4426291824010521361, guid: 1a55a4260fd0ff248b09f38fb4b946a0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5476134044507698002, guid: 1a55a4260fd0ff248b09f38fb4b946a0,
         type: 3}
       propertyPath: m_Enabled
       value: 0

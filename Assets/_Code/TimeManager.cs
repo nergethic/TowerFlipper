@@ -5,28 +5,48 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour {
     [SerializeField] List<BattlefieldUnit> units = new List<BattlefieldUnit>();
-    List<float> timeSinceLastUpdate = new List<float>();
+    List<BattlefieldUnit> scheduledUnits = new List<BattlefieldUnit>();
+    List<int> waitTime = new List<int>();
+    float time = 0f;
 
     private void Update() {
-        for (int i = 0; i < units.Count; i++) {
-            var unit = units[i];
-            timeSinceLastUpdate[i] += Time.deltaTime;
-
-            if (timeSinceLastUpdate[i] >= unit.turnSpeed) {
-                timeSinceLastUpdate[i] = 0f;
-                unit.Tick();
-            }
+        time += Time.deltaTime;
+        if (time >= 1f) {
+            time -= 1f;
+            Tick();
         }
     }
 
     public void Add(BattlefieldUnit unit) {
-        units.Add(unit);
-        timeSinceLastUpdate.Add(0f);
+        scheduledUnits.Add(unit);
     }
 
     public void Remove(BattlefieldUnit unit) {
         int index = units.IndexOf(unit);
         units.RemoveAt(index);
-        timeSinceLastUpdate.RemoveAt(index);
+        waitTime.RemoveAt(index);
+    }
+
+    void Tick() {
+        AddScheduledUnits();
+            
+        for (int i = 0; i < units.Count; i++) {
+            var unit = units[i];
+            waitTime[i] += 1;
+            if (waitTime[i] >= unit.turnSpeed) {
+                waitTime[i] = 0;
+                unit.Tick();
+            }
+        }   
+    }
+
+    void AddScheduledUnits() {
+        for (int i = 0; i < scheduledUnits.Count; i++) {
+            var unitToAdd = scheduledUnits[i];
+            units.Add(unitToAdd);
+            waitTime.Add(0);
+            
+            scheduledUnits.RemoveAt(i);
+        }
     }
 }

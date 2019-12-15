@@ -48,7 +48,7 @@ public class MouseManager : MonoBehaviour {
                         unitManager.SpawnSelectedUnit(snappedPos);
                     }
                     
-                    //highlightedCell.position = new Vector3(snappedPos.x, highlightedCell.position.y, snappedPos.z);
+                    highlightedCell.position = new Vector3(snappedPos.x, highlightedCell.position.y, snappedPos.z);
                     gizmosGridCenterPos = snappedPos;
                     //snapUnit.transform.position = snappedPos;
                     break;
