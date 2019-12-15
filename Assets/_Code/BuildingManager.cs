@@ -26,7 +26,7 @@ public class BuildingManager : MonoBehaviour {
                     resourcesProduction.SetValue(ResourceType.Gold, 1f);
                 break;
             
-            case BuildingType.BigBuilding:
+            case BuildingType.Mine:
                     resourcesProduction.SetValue(ResourceType.Wood, 2f);
                 break;
             
@@ -49,10 +49,10 @@ public class BuildingManager : MonoBehaviour {
                 requiredResources.SetValue(ResourceType.Wood, 10.0f);
                 break;
             
-            case BuildingType.BigBuilding:
-                requiredResources.SetValue(ResourceType.Gold, 50.0f);
-                requiredResources.SetValue(ResourceType.Stone, 50.0f);
-                requiredResources.SetValue(ResourceType.Wood, 50.0f);
+            case BuildingType.Mine:
+                requiredResources.SetValue(ResourceType.Gold, 100.0f);
+                requiredResources.SetValue(ResourceType.Stone, 100.0f);
+                requiredResources.SetValue(ResourceType.Wood, 100.0f);
                 break;
             
             default:
@@ -64,7 +64,7 @@ public class BuildingManager : MonoBehaviour {
 }
 
 public enum BuildingType {
-    BigBuilding = 0,
+    Mine = 0,
     SmolBuildng,
     None
 }
