@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AIManager : MonoBehaviour {
-    [SerializeField] BattlefieldLane battlefieldLane;
-    [SerializeField] BattlefieldUnit unit;
+    [SerializeField] Battlefield battlefieldLane;
+    [SerializeField] Battlefield unit;
 
     void Start() {
         //InvokeRepeating("SpawnWarrior", 1.0f, 3.0f);

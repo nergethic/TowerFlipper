@@ -8,11 +8,12 @@
       <e p="Assets" t="Include">
         <e p="_Code" t="Include">
           <e p="AIManager.cs" t="Include" />
-          <e p="BattlefieldLane.cs" t="Include" />
+          <e p="Battlefield.cs" t="Include" />
           <e p="BattlefieldUnit.cs" t="Include" />
           <e p="Building.cs" t="Include" />
           <e p="BuildingManager.cs" t="Include" />
           <e p="CubeSpawner.cs" t="Include" />
+          <e p="GameEntity.cs" t="Include" />
           <e p="Grid.cs" t="Include" />
           <e p="GroundPlacementController.cs" t="Include" />
           <e p="MathUtility.cs" t="Include" />

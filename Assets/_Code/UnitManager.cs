@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 
 public class UnitManager : MonoBehaviour {
+    [SerializeField] Battlefield battlefield;
     [SerializeField] TimeManager timeManager;
     [SerializeField] BattlefieldUnit selectedUnit;
 
@@ -21,5 +22,6 @@ public class UnitManager : MonoBehaviour {
 
         var battlefieldUnityComponent = instance.GetComponent<BattlefieldUnit>();
         battlefieldUnityComponent.Initialise(timeManager);
+        battlefield.AddEntity(battlefieldUnityComponent);
     }
 }

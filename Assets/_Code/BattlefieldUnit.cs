@@ -3,16 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattlefieldUnit : MonoBehaviour {
+public class BattlefieldUnit : GameEntity {
     public float turnSpeed = 3.0f;
     public Renderer renderer;
     public MovementDirection movementDirection = MovementDirection.Forward;
     public bool isEnemy = false;
     TimeManager timeManager;
-    protected Transform thisTransform;
 
     public virtual void Initialise(TimeManager timeManager) {
-        thisTransform = transform;
         this.timeManager = timeManager;
         timeManager.Add(this);
 
@@ -21,9 +19,6 @@ public class BattlefieldUnit : MonoBehaviour {
         } else if (movementDirection == MovementDirection.Backward) {
             thisTransform.LookAt(thisTransform.position + Vector3.left);
         }
-    }
-
-    public virtual void Tick() {
     }
 
     public enum MovementDirection {

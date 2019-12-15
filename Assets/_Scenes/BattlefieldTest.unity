@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1150,7 +1150,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1039075461}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1284,6 +1284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5370809fe59e1747bd59922ba833f60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  battlefield: {fileID: 1491328762312982413}
   timeManager: {fileID: 642479563}
   selectedUnit: {fileID: 3085161050423193817, guid: cd3f87c862410f84990707979ffbb1ce,
     type: 3}
@@ -2589,6 +2590,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 849820517787816706, guid: 1a55a4260fd0ff248b09f38fb4b946a0,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.4944
+      objectReference: {fileID: 0}
+    - target: {fileID: 849820517787816706, guid: 1a55a4260fd0ff248b09f38fb4b946a0,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.457
+      objectReference: {fileID: 0}
     - target: {fileID: 1491328762761153032, guid: 1a55a4260fd0ff248b09f38fb4b946a0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2679,11 +2690,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 76628239dc12bca45a5c2032aa950407, type: 2}
-    - target: {fileID: 4426291824010521361, guid: 1a55a4260fd0ff248b09f38fb4b946a0,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5476134044507698002, guid: 1a55a4260fd0ff248b09f38fb4b946a0,
         type: 3}
       propertyPath: m_Enabled
