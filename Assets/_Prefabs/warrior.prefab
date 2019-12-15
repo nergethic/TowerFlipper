@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8b8860af819e374786efc27d549a50f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 1
+  turnSpeed: 1
   renderer: {fileID: 1437640288030056193}
   movementDirection: 0
   isEnemy: 0

@@ -4,24 +4,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BattlefieldUnit : MonoBehaviour {
-    [SerializeField] float movementSpeed = 1.0f;
+    public float turnSpeed = 3.0f;
     public Renderer renderer;
     public MovementDirection movementDirection = MovementDirection.Forward;
     public bool isEnemy = false;
+    TimeManager timeManager;
+    Transform thisTransform;
 
-    void Update() {
-        Move();
+    public void Initialise(TimeManager timeManager) {
+        thisTransform = transform;
+        this.timeManager = timeManager;
+        turnSpeed = UnityEngine.Random.RandomRange(0.1f, 4f);
+        timeManager.Add(this);
     }
 
-    void Move() {
-        var pos = transform.position;
+    public void Tick() {
+        var pos = thisTransform.position;
+        pos += thisTransform.forward * 2f;
 
-        if (movementDirection == MovementDirection.Forward)
-            pos.x += movementSpeed * Time.deltaTime;
-        else
-            pos.x -= movementSpeed * Time.deltaTime;
-        
-        transform.position = pos;
+        thisTransform.position = pos;
     }
 
     public enum MovementDirection {
