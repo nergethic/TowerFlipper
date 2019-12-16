@@ -55,7 +55,18 @@ public class BattlefieldGrid : MonoBehaviour {
         return true;
     }
 
-    public bool UpdatePosition(GameEntity entity, ref Vector3 position, bool overrideExisting = false) {
+    public void RemoveEntity(GameEntity entity) {
+        if (entity == null)
+            return;
+
+        Assert.IsTrue(entity is ICanBePlacedOnBattlefield);
+
+        var placableEntity = (ICanBePlacedOnBattlefield)entity;
+        entityGrid[placableEntity.GridIndex].type = EntityType.None;
+        placableEntity.GridIndex = 0;
+    }
+
+    public bool UpdateEntityLocation(GameEntity entity, ref Vector3 position, bool overrideExisting = false) {
         Assert.IsTrue(entity != null);
         Assert.IsTrue(entity is ICanBePlacedOnBattlefield);
 

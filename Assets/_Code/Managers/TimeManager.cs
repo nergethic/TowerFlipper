@@ -22,7 +22,13 @@ public class TimeManager : MonoBehaviour {
     }
 
     public void Remove(BattlefieldUnit unit) {
+        if (unit == null)
+            return;
+        
         int index = units.IndexOf(unit);
+        if (index < 0)
+            return;
+        
         units.RemoveAt(index);
         waitTime.RemoveAt(index);
     }
