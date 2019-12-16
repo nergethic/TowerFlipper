@@ -3,6 +3,8 @@ using DG.Tweening;
 using UnityEngine;
 
 public class Warrior : BattlefieldUnit {
+    [SerializeField] ParticleSystem bloodFX;
+    
     public override void Initialise(Battlefield battlefield, TimeManager timeManager) {
         base.Initialise(battlefield, timeManager);
     }
@@ -23,14 +25,35 @@ public class Warrior : BattlefieldUnit {
         }
     }
 
-    bool TryToMove(Vector3 pos) {
-        var nextCell = battlefield.GetCellAt(ref pos);
-        if (nextCell.success && nextCell.gridCell.IsEmpty()) {
-            var action = thisTransform.DOMove(pos, 0.8f);
-            thisTransform.DOMove(pos, 0.8f);
-            return battlefield.UpdatePosition(this, ref pos);
+    bool HandleEncounter(ref Battlefield.GridCell gridCell) {
+        switch (gridCell.type) {
+            case EntityType.Warrior:
+                var warrior = gridCell.entity as Warrior;
+                if (warrior.isEnemy) {
+                    Debug.Log("Encountered enemy warrior");
+                } else {
+                    return false;
+                }
+                break;
+            
+            default:
+                throw new Exception("entity type not handled");
         }
 
-        return false;
+        return true;
+    }
+
+    bool TryToMove(Vector3 position) {
+        var nextCellInfo = battlefield.GetCellAt(ref position);
+        if (nextCellInfo.success == false)
+            return false;
+
+        if (nextCellInfo.gridCell.IsEmpty()) {
+            var action = thisTransform.DOMove(position, 0.8f);
+            thisTransform.DOMove(position, 0.8f);
+            return battlefield.UpdatePosition(this, ref position);
+        }
+        
+        return HandleEncounter(ref nextCellInfo.gridCell);
     }
 }
