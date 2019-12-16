@@ -58,7 +58,7 @@ public class MouseManager : MonoBehaviour {
 
                 case "Battlefield": {
                     if (mouseIsDown) {
-                        if (!unitManager.SpawnSelectedUnit(snappedPos))
+                        if (!unitManager.SpawnUnit(unitManager.selectedUnit, snappedPos))
                             highlightedCell.transform.DOPunchScale(new Vector3(-0.5f, 0f, -0.5f), 0.5f, 2, 0.3f);
                     }
                     

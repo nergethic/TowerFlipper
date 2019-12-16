@@ -9,10 +9,10 @@ public class BattlefieldUnit : GameEntity, ICanBePlacedOnBattlefield {
     public MovementDirection movementDirection = MovementDirection.Forward;
     public bool isEnemy = false;
     public int GridIndex { get; set; }
-    protected Battlefield battlefield;
+    protected BattlefieldGrid battlefield;
     protected TimeManager timeManager;
 
-    public virtual void Initialise(Battlefield battlefield, TimeManager timeManager) {
+    public virtual void Initialise(BattlefieldGrid battlefield, TimeManager timeManager) {
         this.battlefield = battlefield;
         this.timeManager = timeManager;
         

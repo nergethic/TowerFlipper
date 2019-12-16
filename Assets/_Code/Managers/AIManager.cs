@@ -3,16 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AIManager : MonoBehaviour {
-    [SerializeField] Battlefield battlefieldLane;
-    [SerializeField] Battlefield unit;
+    [SerializeField] UnitManager unitManager;
+    [SerializeField] BattlefieldGrid battlefield;
+    [SerializeField] Warrior unit;
+    Grid grid = new Grid(2); // TODO make this global in HQ
 
     void Start() {
-        //InvokeRepeating("SpawnWarrior", 1.0f, 3.0f);
+        InvokeRepeating("SpawnWarrior", 2.0f, 3.0f);
     }
     
     void SpawnWarrior() {
-        //var newUnit = Instantiate(unit, battlefieldLane.enemySpawnArea.transform.position, Quaternion.identity);
-        //newUnit.isEnemy = true;
-        //newUnit.movementDirection = BattlefieldUnit.MovementDirection.Backward;
+        var snappedPos = grid.SnapToGrid(battlefield.enemySpawn.position);
+        snappedPos.x += grid.halfGridRes;
+        snappedPos.z += grid.halfGridRes;
+        
+        var newUnit = Instantiate(unit, snappedPos, Quaternion.identity);
+        newUnit.isEnemy = true;
+        newUnit.movementDirection = BattlefieldUnit.MovementDirection.Backward;
+        unitManager.SpawnUnit(newUnit, snappedPos);
     }
 }

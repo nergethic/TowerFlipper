@@ -5,7 +5,7 @@ using UnityEngine;
 public class Warrior : BattlefieldUnit {
     [SerializeField] ParticleSystem bloodFX;
     
-    public override void Initialise(Battlefield battlefield, TimeManager timeManager) {
+    public override void Initialise(BattlefieldGrid battlefield, TimeManager timeManager) {
         base.Initialise(battlefield, timeManager);
     }
 
@@ -25,11 +25,13 @@ public class Warrior : BattlefieldUnit {
         }
     }
 
-    bool HandleEncounter(ref Battlefield.GridCell gridCell) {
+    bool HandleEncounter(ref BattlefieldGrid.GridCell gridCell) {
         switch (gridCell.type) {
             case EntityType.Warrior:
                 var warrior = gridCell.entity as Warrior;
-                if (warrior.isEnemy) {
+                bool sameFaction = isEnemy == warrior.isEnemy;
+                if (!sameFaction) {
+                    bloodFX.Play();
                     Debug.Log("Encountered enemy warrior");
                 } else {
                     return false;

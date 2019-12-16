@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Assertions;
 
-public class Battlefield : MonoBehaviour {
+public class BattlefieldGrid : MonoBehaviour {
     [SerializeField] Transform offset;
     public BoxCollider playerSpawnArea;
-    public BoxCollider enemySpawnArea;
+    public Transform enemySpawn;
     public const int GRID_CELLS_COUNT = 200;
     GridCell[] entityGrid = new GridCell[GRID_CELLS_COUNT];
     Vector3Int offsetPosition;
