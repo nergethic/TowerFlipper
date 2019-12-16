@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 using UnityEngine.Assertions.Comparers;
 
 public class MouseManager : MonoBehaviour {
@@ -45,7 +46,8 @@ public class MouseManager : MonoBehaviour {
 
                 case "Battlefield": {
                     if (mouseIsDown) {
-                        unitManager.SpawnSelectedUnit(snappedPos);
+                        if (!unitManager.SpawnSelectedUnit(snappedPos))
+                            highlightedCell.transform.DOPunchScale(new Vector3(-0.5f, 0f, -0.5f), 0.5f, 2, 0.3f);
                     }
                     
                     highlightedCell.position = new Vector3(snappedPos.x, highlightedCell.position.y, snappedPos.z);

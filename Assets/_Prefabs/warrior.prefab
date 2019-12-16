@@ -272,6 +272,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec3c9982fd9480348be5b6b03267d08a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
+  thisTransform: {fileID: 0}
   turnSpeed: 2
   renderer: {fileID: 1437640288030056193}
   movementDirection: 0
