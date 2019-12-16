@@ -1,8 +1,5 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
+﻿using UnityEngine;
 using DG.Tweening;
-using UnityEngine.Assertions.Comparers;
 
 public class MouseManager : MonoBehaviour {
     [SerializeField] Camera camera;
@@ -23,6 +20,21 @@ public class MouseManager : MonoBehaviour {
     }
 
     private void Update() {
+        var screenMouseX = Input.mousePosition.x / Screen.width;
+        screenMouseX = Mathf.Clamp01(screenMouseX);
+
+        if (screenMouseX < 0.3f) {
+            var cameraPos = camera.transform.position;
+            float scrollStrength = MathUtility.Map(0.3f - screenMouseX, 0.0f, 0.3f, 0.0f, 1f);
+            cameraPos.x -= 30f * scrollStrength * Time.deltaTime;
+            camera.transform.position = cameraPos;
+        } else if (screenMouseX > 0.7f) {
+            var cameraPos = camera.transform.position;
+            float scrollStrength = MathUtility.Map(screenMouseX, 0.7f, 1f, 0.0f, 1f);
+            cameraPos.x += 30f * scrollStrength * Time.deltaTime;
+            camera.transform.position = cameraPos;
+        }
+        
         mouseIsDown = Input.GetMouseButtonDown(0);
         Action();
     }

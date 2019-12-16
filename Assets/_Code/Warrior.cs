@@ -27,6 +27,7 @@ public class Warrior : BattlefieldUnit {
         var nextCell = battlefield.GetCellAt(ref pos);
         if (nextCell.success && nextCell.gridCell.IsEmpty()) {
             var action = thisTransform.DOMove(pos, 0.8f);
+            thisTransform.DOMove(pos, 0.8f);
             return battlefield.UpdatePosition(this, ref pos);
         }
 

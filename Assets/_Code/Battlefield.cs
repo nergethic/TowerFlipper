@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 
 public class Battlefield : MonoBehaviour {
@@ -12,6 +9,8 @@ public class Battlefield : MonoBehaviour {
     GridCell[] entityGrid = new GridCell[GRID_CELLS_COUNT];
     Vector3Int offsetPosition;
     GridCell emptyCell;
+    const float CELL_WORLD_WIDTH = 2f;
+    const int FLOOR_CELLS_STRIDE = 40;
 
     private void Awake() {
         emptyCell.type = EntityType.None;
@@ -98,19 +97,19 @@ public class Battlefield : MonoBehaviour {
     }
     
     public (int index, bool success) GetIndex(Vector3 snappedPosition) {
-        var position = (snappedPosition - offsetPosition) / 2;
+        var position = (snappedPosition - offsetPosition) / CELL_WORLD_WIDTH;
         position.z *= -1f;
         return GetIndexInternal(ref position);
     }
     
     public (int index, bool success) GetIndex(GameEntity entity) {
-        var position = (entity.thisTransform.position - offsetPosition) / 2;
+        var position = (entity.thisTransform.position - offsetPosition) / CELL_WORLD_WIDTH;
         position.z *= -1f;
         return GetIndexInternal(ref position);
     }
 
     (int index, bool success) GetIndexInternal(ref Vector3 position) {
-        int index = (int)(Mathf.Floor(position.z)*40 + Mathf.Floor(position.x));
+        int index = (int)(Mathf.Floor(position.z)*FLOOR_CELLS_STRIDE + Mathf.Floor(position.x));
         
         // Debug.LogError($"originalPos: ({snappedPosition.x}, {snappedPosition.z} offset: ({offsetPosition.x}, {offsetPosition.z}))");
         // Debug.LogError($"final: ({position.x}, {position.z}) -> index: {index}");
