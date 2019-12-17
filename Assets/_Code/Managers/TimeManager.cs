@@ -44,8 +44,9 @@ public class TimeManager : MonoBehaviour {
                 if (unit.isDead) {
                     unit.battlefield.RemoveEntity(unit);
                     Remove(unit);
-                }
-                unit.Tick();
+                    Destroy(unit, 1f);
+                } else
+                    unit.Tick();
             }
         }   
     }
