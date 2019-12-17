@@ -1,10 +1,23 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using UnityEngine;
 
 public class UnitManager : MonoBehaviour {
     [SerializeField] BattlefieldGrid battlefield;
     [SerializeField] TimeManager timeManager;
     public BattlefieldUnit selectedUnit;
+    public BattlefieldUnit unitOnMouse;
+
+    public BattlefieldGrid GetBattlefield() {
+        return battlefield;
+    }
+
+    private void Awake() {
+        // unitOnMouse = Instantiate(selectedUnit, Vector3.zero, Quaternion.identity);
+        var p = unitOnMouse.thisTransform.position;
+        p += Vector3.right;
+        unitOnMouse.thisTransform.LookAt(p);
+    }
 
     public void SelectUnit(BattlefieldUnit unit) { // TODO make sure this is happening from prefab
         selectedUnit = unit;

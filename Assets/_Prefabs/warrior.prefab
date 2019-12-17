@@ -97,6 +97,8 @@ MonoBehaviour:
   renderer: {fileID: 8496076070000580769}
   movementDirection: 0
   isEnemy: 0
+  isDead: 0
+  battlefield: {fileID: 0}
   rb: {fileID: 9114761010568937043}
   bloodFX: {fileID: 8747917675603400643}
 --- !u!54 &9114761010568937043
@@ -182,6 +184,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: bbf434c125602db4c8906b1deba9c701, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bbf434c125602db4c8906b1deba9c701, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbf434c125602db4c8906b1deba9c701, type: 3}
 --- !u!4 &8496076070002481731 stripped

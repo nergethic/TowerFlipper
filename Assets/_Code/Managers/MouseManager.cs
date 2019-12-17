@@ -6,17 +6,21 @@ public class MouseManager : MonoBehaviour {
     [SerializeField] UnitManager unitManager;
     [SerializeField] Transform snapUnit;
     [SerializeField] Transform highlightedCell;
+    [SerializeField] Material selectedUnitMaterial;
+    [SerializeField] Color green;
+    [SerializeField] Color red;
     RaycastHit hit;
     Ray ray;
     Vector3 gizmosGridCenterPos = Vector3.zero;
     Grid grid = new Grid(2);
     bool mouseIsDown;
-    //LayerMask hitMask;
+    Vector3 lastMousePosition;
+    int lastCellIndex;
+    int selectedUnitShaderColorID;
 
     private void Start() {
         ray = new Ray();
-        //hitMask = LayerMask.GetMask("");
-        //hitMask = ~hitMask;
+        selectedUnitShaderColorID = Shader.PropertyToID("Color_F8E0E738");
     }
 
     private void Update() {
@@ -36,10 +40,16 @@ public class MouseManager : MonoBehaviour {
         }
         
         mouseIsDown = Input.GetMouseButtonDown(0);
-        Action();
+
+        var mousePosition = Input.mousePosition;
+        float diff = (mousePosition - lastMousePosition).sqrMagnitude;
+        if (mouseIsDown || true) { // TODO optimization // diff > 2f
+            lastMousePosition = mousePosition;
+            Action(ref mousePosition);
+        }
     }
 
-    void Action() {
+    void Action(ref Vector3 mousePosition) {
         ray = camera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit, float.PositiveInfinity)) {
@@ -57,13 +67,40 @@ public class MouseManager : MonoBehaviour {
                 }
 
                 case "Battlefield": {
-                    if (mouseIsDown) {
-                        if (!unitManager.SpawnUnit(unitManager.selectedUnit, snappedPos))
-                            highlightedCell.transform.DOPunchScale(new Vector3(-0.5f, 0f, -0.5f), 0.5f, 2, 0.3f);
+                    var battlefield = unitManager.GetBattlefield();
+                    var cellInfo = battlefield.GetCellAt(ref snappedPos);
+                    if (!cellInfo.success)
+                        return;
+
+                    unitManager.unitOnMouse.thisTransform.position = centerMouse;
+
+                    bool cellIsEmpty = cellInfo.gridCell.IsEmpty();
+                    
+                    if (cellIsEmpty) {
+                        selectedUnitMaterial.SetColor(selectedUnitShaderColorID, green);
+                    } else {
+                        selectedUnitMaterial.SetColor(selectedUnitShaderColorID, red);
                     }
                     
-                    highlightedCell.position = new Vector3(snappedPos.x, highlightedCell.position.y, snappedPos.z);
+                    if (mouseIsDown) {
+                        if (cellIsEmpty) {
+                            unitManager.SpawnUnit(unitManager.selectedUnit, snappedPos);
+                            var action = unitManager.unitOnMouse.thisTransform.DOScale(Vector3.zero, 0.4f);
+                            action.OnComplete(() => {
+                                unitManager.unitOnMouse.thisTransform.DOScale(new Vector3(1, 1, 1), 0.6f);
+                            });
+                        } else {
+                            highlightedCell.localScale = new Vector3(BattlefieldGrid.CELL_WORLD_WIDTH, 0.1f, BattlefieldGrid.CELL_WORLD_WIDTH);
+                            highlightedCell.transform.DOPunchScale(new Vector3(-0.5f, 0f, -0.5f), 0.5f, 2, 0.3f);
+                        }
+                    } else if (cellInfo.gridCell.index == lastCellIndex) 
+                        return;
+
+                    lastCellIndex = cellInfo.gridCell.index;
+                    
+                    highlightedCell.DOMove(new Vector3(snappedPos.x, highlightedCell.position.y, snappedPos.z), 0.12f);
                     gizmosGridCenterPos = snappedPos;
+
                     //snapUnit.transform.position = snappedPos;
                     break;
                 }

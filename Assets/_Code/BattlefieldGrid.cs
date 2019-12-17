@@ -7,11 +7,11 @@ public class BattlefieldGrid : MonoBehaviour {
     public BoxCollider playerSpawnArea;
     public Transform enemySpawn;
     public const int GRID_CELLS_COUNT = 200;
+    public const float CELL_WORLD_WIDTH = 2f;
+    public const int FLOOR_CELLS_STRIDE = 40;
     GridCell[] entityGrid = new GridCell[GRID_CELLS_COUNT];
     Vector3Int offsetPosition;
     GridCell emptyCell;
-    const float CELL_WORLD_WIDTH = 2f;
-    const int FLOOR_CELLS_STRIDE = 40;
 
     private void Awake() {
         emptyCell.type = EntityType.None;
@@ -23,6 +23,7 @@ public class BattlefieldGrid : MonoBehaviour {
         
         for (int i = 0; i < GRID_CELLS_COUNT; i++) {
             entityGrid[i] = new GridCell();
+            entityGrid[i].index = i;
             entityGrid[i].type = EntityType.None;
         }
     }
@@ -130,6 +131,7 @@ public class BattlefieldGrid : MonoBehaviour {
     }
 
     public struct GridCell {
+        public int index;
         public EntityType type;
         public GameEntity entity;
 
