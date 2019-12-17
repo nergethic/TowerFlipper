@@ -6,7 +6,6 @@ using UnityEngine;
 public class Warrior : BattlefieldUnit {
     public Rigidbody rb;
     [SerializeField] ParticleSystem bloodFX;
-    bool die = false;
 
     public override void Initialise(BattlefieldGrid battlefield, TimeManager timeManager) {
         base.Initialise(battlefield, timeManager);
@@ -15,7 +14,7 @@ public class Warrior : BattlefieldUnit {
     }
 
     public override void Tick() {
-        if (die)
+        if (isDead)
             return;
         
         base.Tick();
@@ -24,13 +23,9 @@ public class Warrior : BattlefieldUnit {
         pos += thisTransform.forward * 2f;
 
         if (!TryToMove(pos)) {
-            if (die)
-                return;
             // Debug.LogError($"{name} sees at next cell: {nextCell.type}");
             pos += Vector3.forward * 2f;
             if (!TryToMove(pos)) {
-                if (die)
-                    return;
                 pos -= Vector3.forward * 4f;
                 TryToMove(pos);
             }
@@ -38,25 +33,24 @@ public class Warrior : BattlefieldUnit {
     }
 
     IEnumerator Die() {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.9f);
         rb.isKinematic = false;
         rb.AddExplosionForce(20f, new Vector3(thisTransform.position.x, thisTransform.position.y-0.2f, thisTransform.position.z), 2f);
         rb.AddForce(Vector3.up*50f, ForceMode.Impulse);
-        yield return new WaitForSeconds(2f);
-        battlefield.RemoveEntity(this);
-        timeManager.Remove(this);
     }
 
     bool HandleEncounter(ref BattlefieldGrid.GridCell gridCell) {
         switch (gridCell.type) {
             case EntityType.Warrior:
                 var warrior = gridCell.entity as Warrior;
+                if (warrior.isDead)
+                    return true;
+                
                 bool sameFaction = isEnemy == warrior.isEnemy;
                 if (!sameFaction) {
                     warrior.bloodFX.Play();
                     warrior.StartCoroutine(warrior.Die());
-                    Destroy(this, 4.01f);
-                    warrior.die = true;
+                    warrior.isDead = true;
                     // Debug.Log("Encountered enemy warrior");
                 } else {
                     return false;

@@ -41,6 +41,10 @@ public class TimeManager : MonoBehaviour {
             waitTime[i] += 1;
             if (waitTime[i] >= unit.turnSpeed) {
                 waitTime[i] = 0;
+                if (unit.isDead) {
+                    unit.battlefield.RemoveEntity(unit);
+                    Remove(unit);
+                }
                 unit.Tick();
             }
         }   

@@ -8,8 +8,9 @@ public class BattlefieldUnit : GameEntity, ICanBePlacedOnBattlefield {
     public Renderer renderer;
     public MovementDirection movementDirection = MovementDirection.Forward;
     public bool isEnemy = false;
+    public bool isDead = false;
     public int GridIndex { get; set; }
-    protected BattlefieldGrid battlefield;
+    public BattlefieldGrid battlefield;
     protected TimeManager timeManager;
 
     public virtual void Initialise(BattlefieldGrid battlefield, TimeManager timeManager) {
