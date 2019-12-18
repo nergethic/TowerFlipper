@@ -9,6 +9,7 @@ public class BattlefieldUnit : GameEntity, ICanBePlacedOnBattlefield {
     public MovementDirection movementDirection = MovementDirection.Forward;
     public bool isEnemy = false;
     public bool isDead = false;
+    public int life = 3;
     public int GridIndex { get; set; }
     public BattlefieldGrid battlefield;
     protected TimeManager timeManager;
@@ -25,6 +26,16 @@ public class BattlefieldUnit : GameEntity, ICanBePlacedOnBattlefield {
         } else if (movementDirection == MovementDirection.Backward) {
             thisTransform.LookAt(thisTransform.position + Vector3.left);
         }
+    }
+    
+    public virtual void OnDeathTick() {
+        isDead = true;
+    }
+
+    public void EndLife() {
+        battlefield.RemoveEntity(this);
+        timeManager.Remove(this);
+        Destroy(gameObject, 1.5f);
     }
 
     public enum MovementDirection {

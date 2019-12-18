@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TimeManager : MonoBehaviour {
+    public const float TURN_TIME_SECONDS = 2f;
     [SerializeField] List<BattlefieldUnit> units = new List<BattlefieldUnit>();
     List<BattlefieldUnit> scheduledUnits = new List<BattlefieldUnit>();
     List<int> waitTime = new List<int>();
@@ -11,8 +12,8 @@ public class TimeManager : MonoBehaviour {
 
     private void Update() {
         time += Time.deltaTime;
-        if (time >= 1f) {
-            time -= 1f;
+        if (time >= TURN_TIME_SECONDS) {
+            time -= TURN_TIME_SECONDS;
             Tick();
         }
     }
@@ -41,12 +42,12 @@ public class TimeManager : MonoBehaviour {
             waitTime[i] += 1;
             if (waitTime[i] >= unit.turnSpeed) {
                 waitTime[i] = 0;
-                if (unit.isDead) {
-                    unit.battlefield.RemoveEntity(unit);
-                    Remove(unit);
-                    Destroy(unit, 1f);
-                } else
-                    unit.Tick();
+                
+                unit.Tick();
+                if (unit.life <= 0) {
+                    unit.OnDeathTick();
+                    unit.EndLife();
+                }
             }
         }   
     }

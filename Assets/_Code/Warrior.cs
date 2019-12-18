@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Warrior : BattlefieldUnit {
     public Rigidbody rb;
+    public int attack = 1;
     [SerializeField] ParticleSystem bloodFX;
 
     public override void Initialise(BattlefieldGrid battlefield, TimeManager timeManager) {
@@ -38,6 +39,12 @@ public class Warrior : BattlefieldUnit {
         rb.AddExplosionForce(20f, new Vector3(thisTransform.position.x, thisTransform.position.y-0.2f, thisTransform.position.z), 2f);
         rb.AddForce(Vector3.up*50f, ForceMode.Impulse);
     }
+    
+    IEnumerator Wound() {
+        bloodFX.Play();
+        yield return new WaitForSeconds(0.05f);
+        bloodFX.Stop();
+    }
 
     bool HandleEncounter(ref BattlefieldGrid.GridCell gridCell) {
         switch (gridCell.type) {
@@ -48,9 +55,27 @@ public class Warrior : BattlefieldUnit {
                 
                 bool sameFaction = isEnemy == warrior.isEnemy;
                 if (!sameFaction) {
-                    warrior.bloodFX.Play();
-                    warrior.StartCoroutine(warrior.Die());
-                    warrior.isDead = true;
+                    var currentPos = thisTransform.position;
+                    if (movementDirection == MovementDirection.Forward) {
+                        var action = thisTransform.DOMove(currentPos + Vector3.right * (BattlefieldGrid.CELL_WORLD_WIDTH-0.9f), 0.3f);
+                        action.onComplete = () => {
+                            thisTransform.DOMove(currentPos, 0.7f);
+                        };
+                    } else {
+                        var action = thisTransform.DOMove(currentPos - Vector3.right * (BattlefieldGrid.CELL_WORLD_WIDTH-0.9f), 0.3f);
+                        action.onComplete = () => {
+                            thisTransform.DOMove(currentPos, 0.7f);
+                        };
+                    }
+                     
+                    warrior.life -= attack;
+                    if (warrior.life > 0) 
+                        warrior.StartCoroutine(warrior.Wound());
+                    else {
+                        warrior.isDead = true;
+                        warrior.bloodFX.Play();
+                        warrior.StartCoroutine(warrior.Die());
+                    }
                     // Debug.Log("Encountered enemy warrior");
                 } else {
                     return false;
