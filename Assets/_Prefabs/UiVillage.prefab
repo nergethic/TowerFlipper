@@ -313,8 +313,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7917857620701609701}
   - component: {fileID: 7917857620701609698}
-  - component: {fileID: 7917857620701609699}
   - component: {fileID: 7917857620701609696}
+  - component: {fileID: 5798531450699653617}
   m_Layer: 5
   m_Name: UiVillage
   m_TagString: Untagged
@@ -359,10 +359,10 @@ Canvas:
   m_GameObject: {fileID: 7917857620701609697}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -371,7 +371,24 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &7917857620701609699
+--- !u!114 &7917857620701609696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7917857620701609697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &5798531450699653617
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -393,23 +410,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &7917857620701609696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7917857620701609697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!1 &7917857620796845097
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,7 +733,6 @@ GameObject:
   - component: {fileID: 7917857620877163212}
   - component: {fileID: 7917857620877163217}
   - component: {fileID: 7917857620877163214}
-  - component: {fileID: 7917857620877163215}
   m_Layer: 5
   m_Name: clockArm
   m_TagString: Untagged
@@ -795,29 +794,6 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &7917857620877163215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7917857620877163213}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa0a5713f0b1a734ca8f3491772e026d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numberOfTurns: 1
-  turnsText: {fileID: 7917857620542872343}
-  placement: {fileID: 0}
-  resourcesManager: {fileID: 0}
-  camera: {fileID: 0}
-  buildingManager: {fileID: 0}
-  cameraVillige: {fileID: 0}
-  cameraBattlefield: {fileID: 0}
-  clockArm: {fileID: 0}
-  thingsToChangeOnBattlefieldUI: []
-  thingsToChangeOnVillageUI: []
 --- !u!1 &7917857621168404005
 GameObject:
   m_ObjectHideFlags: 0

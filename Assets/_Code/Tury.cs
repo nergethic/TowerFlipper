@@ -31,7 +31,7 @@ public class Tury : MonoBehaviour {
     }
 
     void Update() {
-        clockArm.eulerAngles = new Vector3(0, 0, -timeOfTurn*6);
+        clockArm.localRotation = Quaternion.Euler(new Vector3(0, 0, -timeOfTurn*6));
         timeOfTurn += Time.deltaTime;
         turnsText.text = "turn: " + numberOfTurns;
         if (Input.GetKeyDown(KeyCode.Space)) {
