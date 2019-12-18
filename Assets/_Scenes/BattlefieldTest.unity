@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -345,7 +345,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   placeableObjectPrefabs:
   - {fileID: 2041134271633708424, guid: 7116d201d0fcbbe45bf6ab93533f42e2, type: 3}
-  - {fileID: 8455153908981181728, guid: c46ba126c1dd5774db43ad143634d88a, type: 3}
+  - {fileID: 2829544154111022879, guid: 3eff8c7652b57594f98cc969f85040de, type: 3}
   buildingManager: {fileID: 255256149}
   resourcesManager: {fileID: 1641818094}
   deleteObjectHotKey: 27
