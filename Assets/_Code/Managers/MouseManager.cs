@@ -27,20 +27,18 @@ public class MouseManager : MonoBehaviour {
         var screenMouseX = Input.mousePosition.x / Screen.width;
         screenMouseX = Mathf.Clamp01(screenMouseX);
 
-        if ((Input.mousePosition.y / Screen.height) > 0.25f) {
-            if (screenMouseX < 0.3f) {
-                var cameraPos = camera.transform.position;
-                float scrollStrength = MathUtility.Map(0.3f - screenMouseX, 0.0f, 0.3f, 0.0f, 1f);
-                cameraPos.x -= 30f * scrollStrength * Time.deltaTime;
-                camera.transform.position = cameraPos;
-            } else if (screenMouseX > 0.7f) {
-                var cameraPos = camera.transform.position;
-                float scrollStrength = MathUtility.Map(screenMouseX, 0.7f, 1f, 0.0f, 1f);
-                cameraPos.x += 30f * scrollStrength * Time.deltaTime;
-                camera.transform.position = cameraPos;
-            }
+        if (screenMouseX < 0.3f) {
+            var cameraPos = camera.transform.position;
+            float scrollStrength = MathUtility.Map(0.3f - screenMouseX, 0.0f, 0.3f, 0.0f, 1f);
+            cameraPos.x -= 30f * scrollStrength * Time.deltaTime;
+            camera.transform.position = cameraPos;
+        } else if (screenMouseX > 0.7f) {
+            var cameraPos = camera.transform.position;
+            float scrollStrength = MathUtility.Map(screenMouseX, 0.7f, 1f, 0.0f, 1f);
+            cameraPos.x += 30f * scrollStrength * Time.deltaTime;
+            camera.transform.position = cameraPos;
         }
-
+        
         mouseIsDown = Input.GetMouseButtonDown(0);
 
         var mousePosition = Input.mousePosition;
