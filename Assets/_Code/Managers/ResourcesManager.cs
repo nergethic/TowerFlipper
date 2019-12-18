@@ -5,9 +5,10 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResourcesManager : MonoBehaviour
-{
-    [SerializeField] private Text resourcesText;
+public class ResourcesManager : MonoBehaviour {
+    [SerializeField] Text goldText;
+    [SerializeField] Text stoneText;
+    [SerializeField] Text woodText;
     Resources playerResources;
 
     private void Awake() {
@@ -22,7 +23,9 @@ public class ResourcesManager : MonoBehaviour
     }
 
     private void Update() {
-        resourcesText.text = $"Gold: {playerResources.GetValue(ResourceType.Gold)}, Stone: {playerResources.GetValue(ResourceType.Stone)}, Wood: {playerResources.GetValue(ResourceType.Wood)}";
+        goldText.text = $"Gold: {playerResources.GetValue(ResourceType.Gold)}";
+        stoneText.text = $"Stone: {playerResources.GetValue(ResourceType.Stone)}";
+        woodText.text = $"Wood: {playerResources.GetValue(ResourceType.Wood)}";
     }
 
     public bool CanSpend(Resources resources) {

@@ -28,10 +28,11 @@ public class Tury : MonoBehaviour {
 
     private void Start() {
         batteFieldPosition = new Vector3(-21.13697f, 14.80627f, -2.933737f);
+        ChangeUiElements();
     }
 
     void Update() {
-        clockArm.localRotation = Quaternion.Euler(new Vector3(0, 0, -timeOfTurn*6));
+        clockArm.localRotation = Quaternion.Euler(new Vector3(0, 0, -(timeOfTurn*15)*6)); // -timeOfTurn*6
         timeOfTurn += Time.deltaTime;
         turnsText.text = "turn: " + numberOfTurns;
         if (Input.GetKeyDown(KeyCode.Space)) {
