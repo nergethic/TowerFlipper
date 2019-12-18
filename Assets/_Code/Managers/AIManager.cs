@@ -9,8 +9,8 @@ public class AIManager : MonoBehaviour {
     Grid grid = new Grid(2); // TODO make this global in HQ
 
     void Start() {
-        InvokeRepeating("SpawnWarrior", 1.0f, 4.0f);
-        InvokeRepeating("SpawnWarrior", 1.5f, 3.5f);
+        InvokeRepeating("SpawnWarrior", 1.0f, 5.0f);
+        InvokeRepeating("SpawnWarrior", 1.5f, 5.5f);
     }
     
     void SpawnWarrior() {
