@@ -50,11 +50,12 @@ public class Tury : MonoBehaviour {
 
     private void MoveCamera() {
         if (numberOfTurns % 2 == 0) {
-            camera.transform.DOMove(cameraVillige.position, 1.5f);
-            camera.transform.DORotate(cameraVillige.rotation.eulerAngles, 1.5f);
-        } else {
             camera.transform.DOMove(batteFieldPosition, 1.5f);
             camera.transform.DORotate(cameraBattlefield.rotation.eulerAngles, 1.5f);
+        } else {
+            
+            camera.transform.DOMove(cameraVillige.position, 1.5f);
+            camera.transform.DORotate(cameraVillige.rotation.eulerAngles, 1.5f);
         }
 
     }
