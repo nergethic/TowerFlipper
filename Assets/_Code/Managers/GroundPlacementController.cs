@@ -67,7 +67,12 @@ public class GroundPlacementController : MonoBehaviour {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
         if (skrrr.Raycast(ray, out hitInfo, float.PositiveInfinity)) {
-            currentPlaceableObject.transform.position = grid.SnapToGrid(hitInfo.point);
+            Vector3 centerMouse = hitInfo.point;
+            var snappedPos = grid.SnapToGrid(centerMouse);
+            snappedPos.x += grid.halfGridRes;
+            snappedPos.z += grid.halfGridRes;
+
+            currentPlaceableObject.transform.position = snappedPos;
             currentPlaceableObject.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);
         }
         
