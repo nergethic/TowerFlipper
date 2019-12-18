@@ -4,6 +4,7 @@ using DG.Tweening;
 public class MouseManager : MonoBehaviour {
     [SerializeField] Camera camera;
     [SerializeField] UnitManager unitManager;
+    [SerializeField] Tury tury;
     [SerializeField] Transform snapUnit;
     [SerializeField] Transform highlightedCell;
     [SerializeField] Material selectedUnitMaterial;
@@ -26,8 +27,8 @@ public class MouseManager : MonoBehaviour {
     private void Update() {
         var screenMouseX = Input.mousePosition.x / Screen.width;
         screenMouseX = Mathf.Clamp01(screenMouseX);
-
-        if ((Input.mousePosition.y / Screen.height) > 0.25f) {
+        
+        if (tury.numberOfTurns % 2 == 0 && (Input.mousePosition.y / Screen.height) > 0.25f) {
             if (screenMouseX < 0.3f) {
                 var cameraPos = camera.transform.position;
                 float scrollStrength = MathUtility.Map(0.3f - screenMouseX, 0.0f, 0.3f, 0.0f, 1f);
