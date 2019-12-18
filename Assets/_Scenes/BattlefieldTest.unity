@@ -421,6 +421,7 @@ MonoBehaviour:
   errorText: {fileID: 153434575}
   errorResources: {fileID: 1258004576}
   skrrr: {fileID: 1039075462}
+  castle: {fileID: 0}
 --- !u!4 &191604935
 Transform:
   m_ObjectHideFlags: 0
@@ -480,7 +481,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitManager: {fileID: 1103852521}
   battlefield: {fileID: 1491328762312982413}
-  builder: {fileID: 1616791291}
   unit: {fileID: 3085161050423193817, guid: cd3f87c862410f84990707979ffbb1ce, type: 3}
 --- !u!1001 &247895565
 PrefabInstance:
@@ -1999,7 +1999,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1208855904}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.4198, y: -1.441, z: 12.71582}
+  m_LocalPosition: {x: -44.38, y: -1.441, z: 9.03}
   m_LocalScale: {x: 2, y: 0.1, z: 2}
   m_Children: []
   m_Father: {fileID: 0}

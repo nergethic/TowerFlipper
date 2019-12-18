@@ -39,7 +39,7 @@ public class TimeManager : MonoBehaviour {
             
         for (int i = 0; i < units.Count; i++) {
             var unit = units[i];
-            waitTime[i] += 1;
+            waitTime[i] += (int)TURN_TIME_SECONDS;
             if (waitTime[i] >= unit.turnSpeed) {
                 waitTime[i] = 0;
                 
@@ -56,9 +56,10 @@ public class TimeManager : MonoBehaviour {
         for (int i = 0; i < scheduledUnits.Count; i++) {
             var unitToAdd = scheduledUnits[i];
             units.Add(unitToAdd);
-            waitTime.Add(0);
-            
-            scheduledUnits.RemoveAt(i);
+            int t = (int)1000;
+            waitTime.Add(t);
         }
+        
+        scheduledUnits.Clear();
     }
 }

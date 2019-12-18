@@ -9,11 +9,14 @@ public class AIManager : MonoBehaviour {
     Grid grid = new Grid(2); // TODO make this global in HQ
 
     void Start() {
-        InvokeRepeating("SpawnWarrior", 2.0f, 3.0f);
+        InvokeRepeating("SpawnWarrior", 1.0f, 4.0f);
+        InvokeRepeating("SpawnWarrior", 1.5f, 3.5f);
     }
     
     void SpawnWarrior() {
-        var snappedPos = grid.SnapToGrid(battlefield.enemySpawn.position);
+        var spawnPoint = battlefield.enemySpawn.position;
+        spawnPoint.z += UnityEngine.Random.Range(-4f, 4f);
+        var snappedPos = grid.SnapToGrid(spawnPoint);
         snappedPos.x += grid.halfGridRes;
         snappedPos.z += grid.halfGridRes;
         

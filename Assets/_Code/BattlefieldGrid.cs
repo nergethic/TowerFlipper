@@ -57,8 +57,8 @@ public class BattlefieldGrid : MonoBehaviour {
     }
 
     public void RemoveEntity(GameEntity entity) {
-        if (entity == null)
-            return;
+        //if (entity == null)
+            //return;
 
         Assert.IsTrue(entity is ICanBePlacedOnBattlefield);
 

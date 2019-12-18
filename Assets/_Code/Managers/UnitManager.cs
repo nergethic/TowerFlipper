@@ -12,11 +12,11 @@ public class UnitManager : MonoBehaviour {
         return battlefield;
     }
 
-    private void Awake() {
+    private void Start() {
         // unitOnMouse = Instantiate(selectedUnit, Vector3.zero, Quaternion.identity);
         var p = unitOnMouse.thisTransform.position;
         p += Vector3.right;
-        unitOnMouse.thisTransform.LookAt(p);
+        unitOnMouse.transform.LookAt(p);
     }
 
     public void SelectUnit(BattlefieldUnit unit) { // TODO make sure this is happening from prefab

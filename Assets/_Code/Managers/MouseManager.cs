@@ -28,7 +28,7 @@ public class MouseManager : MonoBehaviour {
         var screenMouseX = Input.mousePosition.x / Screen.width;
         screenMouseX = Mathf.Clamp01(screenMouseX);
         
-        if (tury.numberOfTurns % 2 == 0 && (Input.mousePosition.y / Screen.height) > 0.25f) {
+        if (tury.camereOnBattlefield && (Input.mousePosition.y / Screen.height) > 0.25f) {
             if (screenMouseX < 0.3f) {
                 var cameraPos = camera.transform.position;
                 float scrollStrength = MathUtility.Map(0.3f - screenMouseX, 0.0f, 0.3f, 0.0f, 1f);
@@ -41,6 +41,9 @@ public class MouseManager : MonoBehaviour {
                 camera.transform.position = cameraPos;
             }
         }
+        
+        highlightedCell.gameObject.SetActive(false);
+        unitManager.unitOnMouse.gameObject.SetActive(false);
 
         mouseIsDown = Input.GetMouseButtonDown(0);
 
@@ -74,6 +77,9 @@ public class MouseManager : MonoBehaviour {
                     var cellInfo = battlefield.GetCellAt(ref snappedPos);
                     if (!cellInfo.success)
                         return;
+                    
+                    highlightedCell.gameObject.SetActive(true);
+                    unitManager.unitOnMouse.gameObject.SetActive(true);
 
                     unitManager.unitOnMouse.thisTransform.position = centerMouse;
 

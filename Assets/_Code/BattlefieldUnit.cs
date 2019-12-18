@@ -33,8 +33,8 @@ public class BattlefieldUnit : GameEntity, ICanBePlacedOnBattlefield {
     }
 
     public void EndLife() {
-        battlefield.RemoveEntity(this);
         timeManager.Remove(this);
+        battlefield.RemoveEntity(this);
         Destroy(gameObject, 1.5f);
     }
 

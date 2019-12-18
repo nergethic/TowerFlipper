@@ -17,16 +17,16 @@ public class Tury : MonoBehaviour {
     private ResourcesManager resourcesManager;
     [SerializeField] private Camera camera;
     [SerializeField] BuildingManager buildingManager;
-    [SerializeField] private Transform cameraVillige;
-    [SerializeField] private Transform cameraBattlefield;
-    [SerializeField] private Transform clockArm;
-    [SerializeField] private GameObject[] thingsToChangeOnBattlefieldUI;
-    [SerializeField] private GameObject[] thingsToChangeOnVillageUI;
-    private Vector3 batteFieldPosition;
-    private Vector3 villigePosition;
+    [SerializeField] Transform cameraVillige;
+    [SerializeField] Transform cameraBattlefield;
+    [SerializeField] Transform clockArm;
+    [SerializeField] GameObject[] thingsToChangeOnBattlefieldUI;
+    [SerializeField] GameObject[] thingsToChangeOnVillageUI;
+    Vector3 batteFieldPosition;
+    Vector3 villigePosition;
+    public bool camereOnBattlefield = false;
 
-    private void Start()
-    {
+    private void Start() {
         batteFieldPosition = new Vector3(-21.13697f, 14.80627f, -2.933737f);
     }
 
@@ -35,49 +35,40 @@ public class Tury : MonoBehaviour {
         timeOfTurn += Time.deltaTime;
         turnsText.text = "turn: " + numberOfTurns;
         if (Input.GetKeyDown(KeyCode.Space)) {
-        //if (timeOfTurn > 5.0f) {
+            MoveCamera();
+        }
+        
+        if (timeOfTurn > 4.0f) {
             foreach (var building in buildingManager.GetBuildings()) 
                 resourcesManager.AddResources(building.resourcesProduction);
             
             numberOfTurns++;
-            MoveCamera();
             timeOfTurn = 0;
             placement.TryToDestroySelectedObject();
-            ChangeUiElements(thingsToChangeOnBattlefieldUI, true);
-            ChangeUiElements(thingsToChangeOnVillageUI, false);
         }
     }
 
-    private void MoveCamera() {
-        if (numberOfTurns % 2 == 0) {
+    void MoveCamera() {
+        camereOnBattlefield = !camereOnBattlefield;
+        
+        if (camereOnBattlefield) {
             camera.transform.DOMove(batteFieldPosition, 1.5f);
             camera.transform.DORotate(cameraBattlefield.rotation.eulerAngles, 1.5f);
         } else {
-            
             camera.transform.DOMove(cameraVillige.position, 1.5f);
             camera.transform.DORotate(cameraVillige.rotation.eulerAngles, 1.5f);
         }
 
+        ChangeUiElements();
     }
 
-    private void ChangeUiElements(GameObject[] thingsToChange, bool isChanged)
-    {
-        if (numberOfTurns % 2 == 0)
-        {
-            for (int i = 0; i < thingsToChange.Length; i++)
-            {
-                thingsToChange[i].SetActive(isChanged);
-            }
+    void ChangeUiElements() {
+        for (int i = 0; i < thingsToChangeOnBattlefieldUI.Length; i++) {
+            thingsToChangeOnBattlefieldUI[i].SetActive(camereOnBattlefield);
         }
-        else
-        {
-            for (int i = 0; i < thingsToChange.Length; i++)
-            {
-                thingsToChange[i].SetActive(!isChanged);
-            }
+        
+        for (int i = 0; i < thingsToChangeOnVillageUI.Length; i++) {
+            thingsToChangeOnVillageUI[i].SetActive(!camereOnBattlefield);
         }
     }
-    
-
-
 }
