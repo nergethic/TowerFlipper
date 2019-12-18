@@ -39,7 +39,7 @@ public class GroundPlacementController : MonoBehaviour {
 
     IEnumerator DisplayPopupBuildingSpace()
     {    
-        errorText.transform.localPosition = Input.mousePosition ;
+       // errorText.transform.localPosition = Input.mousePosition ;
         errorText.text = "You can't build here";
         yield return new WaitForSeconds(1f);
         errorText.text = "";
