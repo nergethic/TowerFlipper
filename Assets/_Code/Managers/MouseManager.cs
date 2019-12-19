@@ -89,6 +89,11 @@ public class MouseManager : MonoBehaviour {
                         selectedUnitMaterial.SetColor(selectedUnitShaderColorID, green);
                     } else {
                         selectedUnitMaterial.SetColor(selectedUnitShaderColorID, red);
+                        
+#if UNITY_EDITOR
+                        //var gridEntity = cellInfo.gridCell.entity as ICanBePlacedOnBattlefield;
+                        //Debug.LogError($"cell idx: {cellInfo.gridCell.index}, cell e type: {cellInfo.gridCell.type}, idx in e: {gridEntity.GridIndex}");
+#endif
                     }
                     
                     if (mouseIsDown) {

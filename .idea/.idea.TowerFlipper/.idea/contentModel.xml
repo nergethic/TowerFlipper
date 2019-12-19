@@ -20,7 +20,7 @@
             <e p="GroundPlacementController.cs" t="Include" />
             <e p="MouseManager.cs" t="Include" />
             <e p="ResourcesManager.cs" t="Include" />
-            <e p="TimeManager.cs" t="Include" />
+            <e p="TurnManager.cs" t="Include" />
             <e p="UnitManager.cs" t="Include" />
           </e>
           <e p="MathUtility.cs" t="Include" />

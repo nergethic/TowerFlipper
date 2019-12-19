@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnitManager : MonoBehaviour {
     [SerializeField] BattlefieldGrid battlefield;
-    [SerializeField] TimeManager timeManager;
+    [SerializeField] TurnManager timeManager;
     public BattlefieldUnit selectedUnit;
     public BattlefieldUnit unitOnMouse;
 

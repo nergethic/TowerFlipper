@@ -8,16 +8,13 @@ public class Warrior : BattlefieldUnit {
     public int attack = 1;
     [SerializeField] ParticleSystem bloodFX;
 
-    public override void Initialise(BattlefieldGrid battlefield, TimeManager timeManager) {
+    public override void Initialise(BattlefieldGrid battlefield, TurnManager timeManager) {
         base.Initialise(battlefield, timeManager);
 
         rb.isKinematic = true;
     }
 
     public override void Tick() {
-        if (isDead)
-            return;
-        
         base.Tick();
         
         var pos = thisTransform.position;
@@ -31,6 +28,12 @@ public class Warrior : BattlefieldUnit {
                 TryToMove(pos);
             }
         }
+    }
+
+    public override void OnDeathTick() {
+        base.OnDeathTick();
+        
+        Tick();
     }
 
     IEnumerator Die() {

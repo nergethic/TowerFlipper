@@ -12,9 +12,9 @@ public class BattlefieldUnit : GameEntity, ICanBePlacedOnBattlefield {
     public int life = 3;
     public int GridIndex { get; set; }
     public BattlefieldGrid battlefield;
-    protected TimeManager timeManager;
+    protected TurnManager timeManager;
 
-    public virtual void Initialise(BattlefieldGrid battlefield, TimeManager timeManager) {
+    public virtual void Initialise(BattlefieldGrid battlefield, TurnManager timeManager) {
         this.battlefield = battlefield;
         this.timeManager = timeManager;
         

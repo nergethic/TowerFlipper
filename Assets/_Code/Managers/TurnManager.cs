@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeManager : MonoBehaviour {
+public class TurnManager : MonoBehaviour {
     public const float TURN_TIME_SECONDS = 2f;
     [SerializeField] List<BattlefieldUnit> units = new List<BattlefieldUnit>();
     List<BattlefieldUnit> scheduledUnits = new List<BattlefieldUnit>();
@@ -36,20 +36,32 @@ public class TimeManager : MonoBehaviour {
 
     void Tick() {
         AddScheduledUnits();
-            
+
+        for (int i = 0; i < units.Count; i++) {
+            waitTime[i] += (int)TURN_TIME_SECONDS;
+        }
+
+        // movement phase
+        // attack phase
         for (int i = 0; i < units.Count; i++) {
             var unit = units[i];
-            waitTime[i] += (int)TURN_TIME_SECONDS;
             if (waitTime[i] >= unit.turnSpeed) {
-                waitTime[i] = 0;
-                
                 unit.Tick();
-                if (unit.life <= 0) {
+            }
+        }
+
+        // death phase
+        for (int i = 0; i < units.Count; i++) {
+            var unit = units[i];
+            if (waitTime[i] >= unit.turnSpeed) {
+                if (unit.isDead || unit.life <= 0) {
                     unit.OnDeathTick();
                     unit.EndLife();
                 }
+                
+                waitTime[i] = 0;
             }
-        }   
+        }
     }
 
     void AddScheduledUnits() {
