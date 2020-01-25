@@ -1437,6 +1437,9 @@ MonoBehaviour:
   timeManager: {fileID: 642479563}
   selectedUnit: {fileID: 3085161050423193817, guid: cd3f87c862410f84990707979ffbb1ce,
     type: 3}
+  unitPrefabs:
+  - {fileID: 3085161050423193817, guid: cd3f87c862410f84990707979ffbb1ce, type: 3}
+  - {fileID: 7696910983130375925, guid: e7266f9f711e38b4488523ad8067727a, type: 3}
   unitOnMouse: {fileID: 1361177082}
 --- !u!1 &1208855904
 GameObject:

@@ -1,4 +1,5 @@
 ﻿using System;
+using Boo.Lang;
 using DG.Tweening;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class UnitManager : MonoBehaviour {
     [SerializeField] BattlefieldGrid battlefield;
     [SerializeField] TurnManager timeManager;
     public BattlefieldUnit selectedUnit;
+    public BattlefieldUnit[] unitPrefabs;
     public BattlefieldUnit unitOnMouse;
 
     public BattlefieldGrid GetBattlefield() {
@@ -13,10 +15,22 @@ public class UnitManager : MonoBehaviour {
     }
 
     private void Start() {
+        selectedUnit = unitPrefabs[0];
+            
         // unitOnMouse = Instantiate(selectedUnit, Vector3.zero, Quaternion.identity);
         var p = unitOnMouse.thisTransform.position;
         p += Vector3.right;
         unitOnMouse.transform.LookAt(p);
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            Debug.LogError("1");
+            selectedUnit = unitPrefabs[0];
+        } else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            Debug.LogError("2");
+            selectedUnit = unitPrefabs[1];
+        }
     }
 
     public void SelectUnit(BattlefieldUnit unit) { // TODO make sure this is happening from prefab

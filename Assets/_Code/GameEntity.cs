@@ -17,6 +17,7 @@ public class GameEntity : MonoBehaviour {
 
 public enum EntityType {
     Warrior = 0,
+    Archer,
     None,
     Count
 }

@@ -9,6 +9,10 @@
         <e p="_Code" t="Include">
           <e p="BattlefieldGrid.cs" t="Include" />
           <e p="BattlefieldUnit.cs" t="Include" />
+          <e p="BattlefieldUnits" t="Include">
+            <e p="Archer.cs" t="Include" />
+            <e p="Warrior.cs" t="Include" />
+          </e>
           <e p="Building.cs" t="Include" />
           <e p="CubeSpawner.cs" t="Include" />
           <e p="GameEntity.cs" t="Include" />
@@ -28,7 +32,6 @@
           <e p="SceneChange.cs" t="Include" />
           <e p="TowerBuilder.cs" t="Include" />
           <e p="Tury.cs" t="Include" />
-          <e p="Warrior.cs" t="Include" />
         </e>
         <e p="Demigiant" t="Include">
           <e p="DOTween" t="Include">

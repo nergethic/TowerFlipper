@@ -7,6 +7,7 @@ public class TurnManager : MonoBehaviour {
     public const float TURN_TIME_SECONDS = 2f;
     [SerializeField] List<BattlefieldUnit> units = new List<BattlefieldUnit>();
     List<BattlefieldUnit> scheduledUnits = new List<BattlefieldUnit>();
+    List<PlannedMove> plannedMoves = new List<PlannedMove>();
     List<int> waitTime = new List<int>();
     float time = 0f;
 
@@ -41,14 +42,27 @@ public class TurnManager : MonoBehaviour {
             waitTime[i] += (int)TURN_TIME_SECONDS;
         }
 
-        // movement phase
-        // attack phase
+        // cell is empty: movement planning phase
+        // enemy detected: attack phase
         for (int i = 0; i < units.Count; i++) {
             var unit = units[i];
             if (waitTime[i] >= unit.turnSpeed) {
                 unit.Tick();
             }
         }
+        
+        // movement resolve phase
+        for (int i = 0; i < plannedMoves.Count; i++) {
+            for (int j = 0; j < plannedMoves.Count; j++) {
+                if (i == j)
+                    continue;
+
+                if (plannedMoves[i].cellIndex == plannedMoves[j].cellIndex) {
+                    
+                }
+            }
+        }
+        plannedMoves.Clear();
 
         // death phase
         for (int i = 0; i < units.Count; i++) {
@@ -74,4 +88,9 @@ public class TurnManager : MonoBehaviour {
         
         scheduledUnits.Clear();
     }
+}
+
+public struct PlannedMove {
+    public int cellIndex;
+    public BattlefieldUnit unit;
 }

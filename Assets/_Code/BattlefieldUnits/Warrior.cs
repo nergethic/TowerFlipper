@@ -33,7 +33,7 @@ public class Warrior : BattlefieldUnit {
     public override void OnDeathTick() {
         base.OnDeathTick();
         
-        Tick();
+        //Tick();
     }
 
     IEnumerator Die() {
@@ -51,7 +51,40 @@ public class Warrior : BattlefieldUnit {
 
     bool HandleEncounter(ref BattlefieldGrid.GridCell gridCell) {
         switch (gridCell.type) {
-            case EntityType.Warrior:
+            case EntityType.Archer: {
+                var archer = gridCell.entity as Archer;
+                if (archer.isDead)
+                    return true;
+
+                bool sameFaction = isEnemy == archer.isEnemy;
+                if (!sameFaction) {
+                    var currentPos = thisTransform.position;
+                    if (movementDirection == MovementDirection.Forward) {
+                        var action =
+                            thisTransform.DOMove(currentPos + Vector3.right * (BattlefieldGrid.CELL_WORLD_WIDTH - 0.9f),
+                                0.3f);
+                        action.onComplete = () => { thisTransform.DOMove(currentPos, 0.7f); };
+                    }
+                    else {
+                        var action =
+                            thisTransform.DOMove(currentPos - Vector3.right * (BattlefieldGrid.CELL_WORLD_WIDTH - 0.9f),
+                                0.3f);
+                        action.onComplete = () => { thisTransform.DOMove(currentPos, 0.7f); };
+                    }
+
+                    archer.life -= attack;
+                    if (archer.life < 0)
+                        archer.isDead = true;
+                    // Debug.Log("Encountered enemy warrior");
+                }
+                else {
+                    return false;
+                }
+
+                break;
+            }
+
+            case EntityType.Warrior: {
                 var warrior = gridCell.entity as Warrior;
                 if (warrior.isDead)
                     return true;
@@ -84,7 +117,8 @@ public class Warrior : BattlefieldUnit {
                     return false;
                 }
                 break;
-            
+            }
+
             default:
                 throw new Exception("entity type not handled");
         }

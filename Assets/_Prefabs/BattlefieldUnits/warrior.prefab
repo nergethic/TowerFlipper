@@ -92,14 +92,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  thisTransform: {fileID: 0}
+  thisTransform: {fileID: 5261502829876032449}
   turnSpeed: 2
   renderer: {fileID: 8496076070000580769}
   movementDirection: 0
   isEnemy: 0
   isDead: 0
+  life: 3
   battlefield: {fileID: 0}
   rb: {fileID: 9114761010568937043}
+  attack: 1
   bloodFX: {fileID: 8747917675603400643}
 --- !u!54 &9114761010568937043
 Rigidbody:

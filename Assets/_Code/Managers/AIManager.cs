@@ -23,6 +23,6 @@ public class AIManager : MonoBehaviour {
         var newUnit = Instantiate(unit, snappedPos, Quaternion.identity);
         newUnit.isEnemy = true;
         newUnit.movementDirection = BattlefieldUnit.MovementDirection.Backward;
-        unitManager.SpawnUnit(newUnit, snappedPos); ;
+        unitManager.SpawnUnit(newUnit, snappedPos);
     }
 }
