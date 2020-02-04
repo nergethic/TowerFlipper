@@ -7,6 +7,7 @@ public class BattlefieldUnit : GameEntity, ICanBePlacedOnBattlefield {
     public float turnSpeed = 3.0f;
     public Renderer renderer;
     public MovementDirection movementDirection = MovementDirection.Forward;
+    public int visionLevel;
     public bool isEnemy = false;
     public bool isDead = false;
     public int life = 3;
@@ -31,11 +32,23 @@ public class BattlefieldUnit : GameEntity, ICanBePlacedOnBattlefield {
     public virtual void OnDeathTick() {
         isDead = true;
     }
+    
+    public virtual void PlanActionTick() {
+        
+    }
+
+    public virtual void HandleEnounterWithOtherUnit(BattlefieldUnit otherUnit) {
+        
+    }
 
     public void EndLife() {
         timeManager.Remove(this);
         battlefield.RemoveEntity(this);
         Destroy(gameObject, 1.5f);
+    }
+    
+    public virtual void ScanArea() {
+
     }
 
     public enum MovementDirection {

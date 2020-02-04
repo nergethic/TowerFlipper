@@ -11,8 +11,7 @@ public class GameEntity : MonoBehaviour {
         thisTransform = transform;
     }
     
-    public virtual void Tick() {
-    }
+    public virtual void Tick() {}
 }
 
 public enum EntityType {
