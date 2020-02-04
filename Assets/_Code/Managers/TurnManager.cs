@@ -43,11 +43,15 @@ public class TurnManager : MonoBehaviour {
         }
 
         // cell is empty: movement planning phase
+        // (bool wantsToMove, PlannedMove move)
         // enemy detected: attack phase
         for (int i = 0; i < units.Count; i++) {
             var unit = units[i];
             if (waitTime[i] >= unit.turnSpeed) {
                 unit.Tick();
+                //var (wantsToMove, plannedMove) = unit.Tick();
+                //if (wantsToMove)
+                    //plannedMoves.Add(plannedMove);
             }
         }
         
@@ -64,7 +68,7 @@ public class TurnManager : MonoBehaviour {
         }
         plannedMoves.Clear();
 
-        // death phase
+        // death phase and turn timer reset 
         for (int i = 0; i < units.Count; i++) {
             var unit = units[i];
             if (waitTime[i] >= unit.turnSpeed) {
@@ -93,4 +97,10 @@ public class TurnManager : MonoBehaviour {
 public struct PlannedMove {
     public int cellIndex;
     public BattlefieldUnit unit;
+}
+
+public enum ActionType {
+    Attack = 0,
+    Move,
+    Turn
 }
