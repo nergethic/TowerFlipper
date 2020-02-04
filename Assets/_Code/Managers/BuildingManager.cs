@@ -23,7 +23,8 @@ public class BuildingManager : MonoBehaviour {
         
         switch (building.type) {
             case BuildingType.SmolBuildng:
-                    resourcesProduction.SetValue(ResourceType.Gold, 1f);
+                resourcesProduction.SetValue(ResourceType.Gold, 1f);
+                building.GetComponent<BuildingStorage>().Register();
                 break;
             
             case BuildingType.Mine:

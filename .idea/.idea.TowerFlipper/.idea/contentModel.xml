@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\Nerg\.Rider2019.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Nerg\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_TowerFlipper.-1895545579.00" t="ExcludeRecursive" />
-    <e p="C:\Users\Nerg\Documents\TowerFlipper" t="IncludeRecursive">
+    <e p="C:\Users\fipis\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\fipis\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_TowerFlipper.-1532440563.00" t="ExcludeRecursive" />
+    <e p="C:\Users\fipis\OneDrive\Dokumenty\GitHub\TowerFlipper" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="_Code" t="Include">
@@ -44,6 +44,45 @@
               <e p="DOTweenModuleUtils.cs" t="Include" />
             </e>
             <e p="readme.txt" t="Include" />
+          </e>
+        </e>
+        <e p="Downloaded" t="Include">
+          <e p="Low Poly Castle Siege Pack" t="Include">
+            <e p="Components" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="LightFlicker.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Village" t="Include">
+            <e p="LowPoly" t="Include">
+              <e p="Medieval" t="Include">
+                <e p="Misc" t="Include">
+                  <e p="Shaders" t="Include">
+                    <e p="EmissionShader.shader" t="Include" />
+                  </e>
+                </e>
+                <e p="Village" t="Include">
+                  <e p="Scripts" t="Include">
+                    <e p="ContainerOpener.cs" t="Include" />
+                    <e p="InfiniteRotator.cs" t="Include" />
+                    <e p="ToggleScript.cs" t="Include" />
+                  </e>
+                </e>
+              </e>
+            </e>
+            <e p="Materials" t="Include">
+              <e p="Shaders" t="Include">
+                <e p="DiffuseVertexColor.shader" t="Include" />
+              </e>
+            </e>
+          </e>
+        </e>
+        <e p="WorkerRelated" t="Include">
+          <e p="BuildingStorage.cs" t="Include" />
+          <e p="ResourceNode.cs" t="Include" />
+          <e p="worker" t="Include">
+            <e p="Worker.cs" t="Include" />
           </e>
         </e>
       </e>

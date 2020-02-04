@@ -1165,6 +1165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2829544154111249215}
   - component: {fileID: 114376364657595396}
+  - component: {fileID: 114216086972703980}
   m_Layer: 0
   m_Name: Sawmill
   m_TagString: Untagged
@@ -1246,6 +1247,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+--- !u!114 &114216086972703980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2829544154111022879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d3759948ef6ae64c859f3f0a1545afb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worker: {fileID: 395171176, guid: 84eb5f875927e1b4488da70fd4746adc, type: 3}
 --- !u!1 &2829544154111022881
 GameObject:
   m_ObjectHideFlags: 0
