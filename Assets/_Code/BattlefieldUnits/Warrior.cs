@@ -2,6 +2,7 @@
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Warrior : BattlefieldUnit {
     public Rigidbody rb;
@@ -14,9 +15,10 @@ public class Warrior : BattlefieldUnit {
         rb.isKinematic = true;
     }
 
-    public override void Tick() {
-        base.Tick();
+    //public override void ResolveAction(PlannedAction action) {
+        //base.ResolveAction(action);
         
+        /*
         var pos = thisTransform.position;
         pos += thisTransform.forward * 2f;
 
@@ -28,6 +30,58 @@ public class Warrior : BattlefieldUnit {
                 TryToMove(pos);
             }
         }
+        */
+    //}
+    
+    public override void ExecuteAction(PlannedAction action) {
+        switch (action.type) {
+            case ActionType.Attack:
+                var (cell, success) = battlefield.GetCellAt(action.cellIndex);
+                if (success)
+                    HandleEncounter(ref cell);
+                break;
+            
+            case ActionType.MoveForward:
+                    MoveForwards();
+                break;
+
+            case ActionType.TurnLeft: {
+                var rot = thisTransform.eulerAngles + Quaternion.AngleAxis(90f, Vector3.up).eulerAngles;
+                thisTransform.DORotate(rot, 0.8f);
+            } break;
+
+            case ActionType.TurnRight: {
+                var rot = thisTransform.eulerAngles + Quaternion.AngleAxis(90f, Vector3.up).eulerAngles;
+                thisTransform.DORotate(-rot, 0.8f);
+            } break;
+            
+            case ActionType.DoNothing:
+                break;
+            
+            default:
+                throw new Exception("invalid switch case!");
+        }
+    }
+
+    public override PlannedAction PlanActionOn(BattlefieldGrid.GridCell cell) { // TODO
+        var entity = cell.entity as BattlefieldUnit;
+        PlannedAction plannedAction = new PlannedAction{ thisUnit = this, otherUnit = entity, cellIndex = cell.index };
+
+        if ((isEnemy && entity.isEnemy) || (!isEnemy && !entity.isEnemy))
+            plannedAction.type = ActionType.DoNothing;
+        else
+            plannedAction.type = ActionType.Attack;
+        
+
+        switch (cell.type) { // TODO
+            case EntityType.Warrior:
+                break;
+            
+            case EntityType.Archer:
+                break;
+        }
+
+        return plannedAction;
     }
 
     public override void OnDeathTick() {
@@ -138,5 +192,18 @@ public class Warrior : BattlefieldUnit {
         }
         
         return HandleEncounter(ref nextCellInfo.gridCell);
+    }
+
+    void MoveForwards() {
+        var pos = thisTransform.position;
+        pos += thisTransform.forward * 2f;
+        
+        var nextCellInfo = battlefield.GetCellAt(ref pos);
+
+        if (nextCellInfo.gridCell.IsEmpty()) {
+            var action = thisTransform.DOMove(pos, 0.8f);
+            thisTransform.DOMove(pos, 0.8f);
+            battlefield.UpdateEntityLocation(this, ref pos);
+        }
     }
 }

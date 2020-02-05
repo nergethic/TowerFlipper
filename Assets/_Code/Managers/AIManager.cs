@@ -10,7 +10,8 @@ public class AIManager : MonoBehaviour {
 
     void Start() {
         InvokeRepeating("SpawnWarrior", 1.0f, 5.0f);
-        InvokeRepeating("SpawnWarrior", 1.5f, 5.5f);
+        //InvokeRepeating("SpawnWarrior", 1.5f, 5.5f);
+        //SpawnWarrior();
     }
     
     void SpawnWarrior() {

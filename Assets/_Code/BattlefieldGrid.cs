@@ -9,6 +9,7 @@ public class BattlefieldGrid : MonoBehaviour {
     public const int GRID_CELLS_COUNT = 200;
     public const float CELL_WORLD_WIDTH = 2f;
     public const int FLOOR_CELLS_STRIDE = 40;
+    public const int FLOOR_CELLS_HEIGHT = GRID_CELLS_COUNT / FLOOR_CELLS_STRIDE;
     GridCell[] entityGrid = new GridCell[GRID_CELLS_COUNT];
     Vector3Int offsetPosition;
     GridCell emptyCell;
@@ -97,28 +98,51 @@ public class BattlefieldGrid : MonoBehaviour {
 
     public (GridCell gridCell, bool success) GetCellAt(ref Vector3 snappedPosition) {
         var (index, success) = GetIndex(snappedPosition);
-        
-        if (success) 
-            return (entityGrid[index], true);
+
+        if (success)
+            return GetCellAt(index);
 
         return (emptyCell, false);
     }
     
-    public GridCell GetEntityAt(int index) {
+    public (GridCell gridCell, bool success) GetCellAt(int index) {
         Assert.IsTrue(index >= 0 || index < GRID_CELLS_COUNT, $"Index = {index} is outside of array bounds!");
-        return entityGrid[index];
+        return (entityGrid[index], true);
     }
-    
+
     public (int index, bool success) GetIndex(Vector3 snappedPosition) {
         var position = (snappedPosition - offsetPosition) / CELL_WORLD_WIDTH;
         position.z *= -1f;
         return GetIndexInternal(ref position);
+    }
+
+    public (int x, int y) GetPositionFromIndex(int index) {
+        int x = index % FLOOR_CELLS_STRIDE;
+        int y = index / FLOOR_CELLS_STRIDE;
+
+#if UNITY_EDITOR
+        // reverse check
+        var testPosition = new Vector3(x, 0, y);
+        var (computedIndex, success) = GetIndexInternal(ref testPosition);
+        Assert.IsTrue(success);
+        Assert.IsTrue(index == computedIndex);
+#endif
+        
+        return (x, y);
     }
     
     public (int index, bool success) GetIndex(GameEntity entity) {
         var position = (entity.thisTransform.position - offsetPosition) / CELL_WORLD_WIDTH;
         position.z *= -1f;
         return GetIndexInternal(ref position);
+    }
+
+    public (int index, bool success) GetIndex(int x, int y) {
+        int index = y*FLOOR_CELLS_STRIDE + x;
+        
+        // Debug.LogError($"final: ({x}, {y}) -> index: {index}");
+        bool isOutsideBounds = index < 0 || index >= GRID_CELLS_COUNT;
+        return (index, isOutsideBounds == false);
     }
 
     (int index, bool success) GetIndexInternal(ref Vector3 position) {

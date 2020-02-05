@@ -41,22 +41,19 @@ public class Tury : MonoBehaviour {
         timeOfTurn += Time.deltaTime;
         turnsText.text = "turn: " + numberOfTurns;
         if (Input.GetKeyDown(KeyCode.Space)) {
+            MoveCamera();
         }
         
         if (timeOfTurn > 4.0f) {
-            MoveCamera();
+            //MoveCamera();
 
             foreach (var building in buildingManager.GetBuildings()) 
                 resourcesManager.AddResources(building.resourcesProduction);
 
-            if (numberOfTurns % 2 == 0 )
-            {
+            if (numberOfTurns % 2 == 0 ) {
                 sky.SetActive(true);
                 horizon.SetActive(false);
-            }
-
-            else
-            {
+            } else {
                 sky.SetActive(false);
                 horizon.SetActive(true);
             }

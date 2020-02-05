@@ -96,6 +96,7 @@ MonoBehaviour:
   turnSpeed: 2
   renderer: {fileID: 8496076070000580769}
   movementDirection: 0
+  visionLevel: 1
   isEnemy: 0
   isDead: 0
   life: 3
