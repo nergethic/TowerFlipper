@@ -19,7 +19,11 @@ public class GroundPlacementController : MonoBehaviour {
     private BuildingType selectedBuildingType = BuildingType.None;
     private Dictionary<Vector3, BuildingType> occupiedGrids = new Dictionary<Vector3, BuildingType>();
     [SerializeField] BoxCollider skrrr;
-    [SerializeField] private BoxCollider castle;
+    [SerializeField] private BoxCollider village;
+    [SerializeField] private BoxCollider colliderRight;
+
+    
+    
     Grid grid = new Grid(2);
 
     private void Start()
@@ -67,7 +71,7 @@ public class GroundPlacementController : MonoBehaviour {
         
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hitInfo;
-        if (skrrr.Raycast(ray, out hitInfo, float.PositiveInfinity)) {
+        if (skrrr.Raycast(ray, out hitInfo, 15f) && !village.Raycast(ray, out hitInfo, 15f) && !colliderRight.Raycast(ray, out hitInfo, 15f)) {
             Vector3 centerMouse = hitInfo.point;
             var snappedPos = grid.SnapToGrid(centerMouse);
             snappedPos.x += grid.halfGridRes;
