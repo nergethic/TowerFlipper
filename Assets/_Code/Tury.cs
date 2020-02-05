@@ -22,6 +22,9 @@ public class Tury : MonoBehaviour {
     [SerializeField] Transform clockArm;
     [SerializeField] GameObject[] thingsToChangeOnBattlefieldUI;
     [SerializeField] GameObject[] thingsToChangeOnVillageUI;
+    [SerializeField] GameObject sky;
+    [SerializeField] GameObject horizon;
+
     Vector3 batteFieldPosition;
     Vector3 villigePosition;
     public bool camereOnBattlefield = false;
@@ -29,6 +32,8 @@ public class Tury : MonoBehaviour {
     private void Start() {
         batteFieldPosition = new Vector3(-21.13697f, 14.80627f, -2.933737f);
         ChangeUiElements();
+        horizon.SetActive(false);
+
     }
 
     void Update() {
@@ -36,13 +41,26 @@ public class Tury : MonoBehaviour {
         timeOfTurn += Time.deltaTime;
         turnsText.text = "turn: " + numberOfTurns;
         if (Input.GetKeyDown(KeyCode.Space)) {
-            MoveCamera();
         }
         
         if (timeOfTurn > 4.0f) {
+            MoveCamera();
+
             foreach (var building in buildingManager.GetBuildings()) 
                 resourcesManager.AddResources(building.resourcesProduction);
-            
+
+            if (numberOfTurns % 2 == 0 )
+            {
+                sky.SetActive(true);
+                horizon.SetActive(false);
+            }
+
+            else
+            {
+                sky.SetActive(false);
+                horizon.SetActive(true);
+            }
+                
             numberOfTurns++;
             timeOfTurn = 0;
             placement.TryToDestroySelectedObject();
